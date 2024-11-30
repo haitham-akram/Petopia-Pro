@@ -7,11 +7,12 @@ const { NODE_ENV, DEV_DB_URL, PROD_DB_URL, TEST_DB } = process.env
 
 let url: string
 
-const options = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    ssl: process.env.NODE_ENV === 'production'
-};
+// const options = {
+    // useNewUrlParser: ,
+    // useUnifiedTopology: process.env.NODE_ENV === 'production',
+    // ssl: process.env.NODE_ENV === 'production'
+// };
+
 switch (NODE_ENV) {
     case 'production':
         url = PROD_DB_URL as string
@@ -26,6 +27,6 @@ switch (NODE_ENV) {
         throw new Error('NODE_ENV is not set')
 }
 
-const connection = mongoose.connect(url, options)
+const connection = mongoose.connect(url)
 
 export default connection
