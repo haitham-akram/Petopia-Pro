@@ -1,25 +1,14 @@
-import PostImage from "../../database/schemas/postImageSchema";
 import Post from "../../database/schemas/postSchema";
-import { PostDataType, PostImageDataType } from "../../interfaces/PostDataType";
-
+import IPost from '../../interfaces/PostDataInterface'
 
 // Add new Post service
-const addNewPost = async ({
-  PostData,
-  PostImageData,
-}: {
-  PostData: PostDataType;
-  PostImageData?: PostImageDataType;
-}) => {
+const addNewPost = async ({ PostData }: { PostData: IPost }) => {
   // Save the Post to the database
   const newPost = new Post(PostData);
-  await newPost.save();
+  return await newPost.save();
 
-  const newImage = new PostImage(PostImageData);
-
-  // Save the image of the post if the post have one to the database
-  await newImage.save();
-  console.log("Post saved:", newPost);
+  // Save the post if the post have one to the database
+  // console.log("Post saved:", newPost);
 };
 
 export default addNewPost;

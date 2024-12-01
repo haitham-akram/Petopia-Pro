@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express'
+import PostsRouter from './User/Posts/addNewPost'
 const router = express.Router()
 
 const test_router = async (req: Request, res: Response): Promise<void> => {
@@ -6,5 +7,6 @@ const test_router = async (req: Request, res: Response): Promise<void> => {
 }
 
 router.get('/test', test_router)
+router.use('/posts', PostsRouter)
 
 export default router

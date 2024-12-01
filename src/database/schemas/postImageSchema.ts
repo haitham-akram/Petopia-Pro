@@ -4,13 +4,13 @@ import mongoose, { Schema } from "mongoose";
 // Define the PostImage schema
 const postImageSchema = new Schema(
   {
-    imageId: {
-      type: Number, // Store imageId as a number
-      required: true,
-      unique: true, // Ensures no duplicate imageId
-    },
+    // imageId: {
+    //   type: Number, // Store imageId as a number
+    //   required: true,
+    //   unique: true, // Ensures no duplicate imageId
+    // },
     postId: {
-      type: Number, // The ID of the associated post
+      type: String, // The ID of the associated post
       required: true,
     },
     imageUrl: {
