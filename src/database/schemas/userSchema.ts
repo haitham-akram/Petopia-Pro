@@ -30,13 +30,13 @@ const userSchema = new Schema(
       type: String, // User's phone number
     },
     isAdmin: {
-      type: Boolean, // Whether the post has an image or not
+      type: Boolean,
       required: true,
       default: false,
     },
     status: {
-      type: String, // Status of the user (active or deactive)
-      enum: ['active', 'deactive'], // Enum validation for status
+      type: String, // Status of the user (active or disActive)
+      enum: ['active', 'disActive'], // Enum validation for status
       default: 'active',
       required: true,
     },
