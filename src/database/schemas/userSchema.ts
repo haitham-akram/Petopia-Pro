@@ -31,12 +31,12 @@ const userSchema = new Schema(
     },
     isAdmin: {
       type: Boolean,
-      required: true,
       default: false,
+      required: true,
     },
     status: {
-      type: String, // Status of the user (active or disActive)
-      enum: ['active', 'disActive'], // Enum validation for status
+      type: String, // Status of the user (active or inactive)
+      enum: ['active', 'inactive'], // Enum validation for status
       default: 'active',
       required: true,
     },
@@ -59,4 +59,4 @@ const userSchema = new Schema(
 // Create the User model from the schema
 const User = mongoose.model('User', userSchema);
 
-export default  User;
+export default User;

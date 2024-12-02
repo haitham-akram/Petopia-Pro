@@ -1,2 +1,3 @@
-import loginSchema from './login'
-export {loginSchema}
+import validateLogin from './login'
+import validateSignup from './signup'
+export { validateLogin , validateSignup }
