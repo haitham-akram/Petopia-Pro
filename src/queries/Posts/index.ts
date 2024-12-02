@@ -2,14 +2,14 @@
 
 import addNewPost from "./addNewPost";
 import addNewPostImage from "./addNewPostImage";
-import callPostById from "./callPostById";
+import callOnePostById from "./callOnePostById";
 import callAllPostsByUserId from "./callAllPostsByUserId";
 import callOnePostByUserId from "./callOnePostByUserId";
 
 export {
   addNewPost,
   addNewPostImage,
-  callPostById,
+  callOnePostById,
   callAllPostsByUserId,
   callOnePostByUserId,
 };

@@ -1,11 +1,11 @@
 import Post from "../../database/schemas/postSchema";
 import IQureyReturn from "../../interfaces/queryReturnInterface";
 
-// call old Post by query using userId
-const callOnePostByUserId = async ({
-  userId,
+// call old Post by query
+const callOnePostById = async ({
+  postId,
 }: {
-  userId: string;
+  postId: string;
 }): Promise<IQureyReturn> => {
   // Save the Post to the database
   let result = {
@@ -14,8 +14,8 @@ const callOnePostByUserId = async ({
   };
 
   try {
-    const userPost = () => Post.find({ userId });
-    result.data = await userPost;
+    const calledPost = () => Post.findById(postId);
+    result.data = await calledPost;
   } catch (error) {
     result.error = {
       msg: "error in the post query",
@@ -26,4 +26,4 @@ const callOnePostByUserId = async ({
   return result;
 };
 
-export default callOnePostByUserId;
+export default callOnePostById;

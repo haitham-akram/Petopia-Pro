@@ -20,10 +20,6 @@ const postSchema = new Schema(
       type: String, // Content of the post
       required: true,
     },
-    isHaveImg: {
-      type: Boolean, // Whether the post has an image or not
-      required: true,
-    },
     likesCount: {
       type: Number, // Number of likes on the post
       default: 0, // Default value is 0
@@ -31,7 +27,15 @@ const postSchema = new Schema(
     commentsCount: {
       type: Number, // Number of comments on the post
       default: 0, // Default value is 0
-    }
+    },
+    images: [
+      {
+        url: {
+          type: String, // Image Url
+          required: true,
+        },
+      },
+    ],
   },
   {
     timestamps: true, // Automatically handle createdAt and updatedAt
@@ -39,6 +43,6 @@ const postSchema = new Schema(
 );
 
 // Create the Post model from the schema
-const Post = mongoose.model('Post', postSchema);
+const Post = mongoose.model("Post", postSchema);
 
 export default Post;

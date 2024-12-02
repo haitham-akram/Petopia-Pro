@@ -10,7 +10,7 @@ const postImageSchema = new Schema(
     //   unique: true, // Ensures no duplicate imageId
     // },
     postId: {
-      type: String, // The ID of the associated post
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
     imageUrl: {

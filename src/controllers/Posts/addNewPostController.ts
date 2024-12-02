@@ -1,32 +1,33 @@
 import { addNewPost, addNewPostImage } from "../../queries/Posts";
-import IPost from "../../interfaces/PostDataInterface";
-import IPostImage from "../../interfaces/PostImageInterface";
+import { type Response, type NextFunction } from "express";
+import { type CustomPostRequest } from "../../interfaces/CustomRequestInterface/NewPostRequestInterface";
+import PostDataValidator from "../../validation/PostDataValidator";
 
-async function AddNewPostController({
-  PostData,
-  PostImageData,
-}: {
-  PostData: IPost;
-  PostImageData: IPostImage;
-}) {
-  console.log(PostData);
-
-  let newPostImage;
-  let newPost;
-
+async function AddNewPostController(
+  req: CustomPostRequest,
+  res: Response,
+  next: NextFunction
+) {
   try {
-    if (PostData.isHaveImg) {
-      newPost = await addNewPost({ PostData });
-      PostImageData.postId = newPost.id;
-      newPostImage = await addNewPostImage({ PostImageData });
-    }
-  } catch (error) {
-    console.error("An error occurred:", error);
-  } finally {
-    console.log("All functions attempted.");
+    const { PostData } = req.body;
+
+    const validatedPostData = await PostDataValidator(PostData);
+
+    const NewPost = await addNewPost(validatedPostData);
+
+    console.log(NewPost);
+
+    res.status(201).json({
+      message: `Post created successfully with ID: ${NewPost._id}`,
+      data: {
+        post: PostData,
+      },
+    });
+  } catch (err) {
+    console.log(err);
   }
 
-  return { newPostImage, newPost };
+  next();
 }
 
 export default AddNewPostController;
