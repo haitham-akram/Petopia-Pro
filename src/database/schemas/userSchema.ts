@@ -30,13 +30,13 @@ const userSchema = new Schema(
       type: String, // User's phone number
     },
     isAdmin: {
-      type: Boolean, // Whether the post has an image or not
-      required: true,
+      type: Boolean,
       default: false,
+      required: true,
     },
     status: {
-      type: String, // Status of the user (active or deactive)
-      enum: ['active', 'deactive'], // Enum validation for status
+      type: String, // Status of the user (active or inactive)
+      enum: ['active', 'inactive'], // Enum validation for status
       default: 'active',
       required: true,
     },
@@ -59,4 +59,4 @@ const userSchema = new Schema(
 // Create the User model from the schema
 const User = mongoose.model('User', userSchema);
 
-export default  User;
+export default User;
