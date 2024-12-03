@@ -17,13 +17,13 @@ const authenticate = (authorizedTypes: userTypes[]) => async (req: CustomRequest
         try {
             const authenticatedUser = await verifyToken(token);
             req.user = authenticatedUser;
-            if (req.user === null) {
-                next(new CustomError(402, 'User not found'));
+            if (authenticatedUser === null) {
+                next(new CustomError(404, 'User Not Found'));
             } else {
                 const isAdmin = req.user?.isAdmin;
                 if (isAdmin === undefined) {
-                    next(new CustomError(402, 'User is missing admin status'));
-                } else if (authorizedTypes.includes(isAdmin as unknown as userTypes)) {
+                    next(new CustomError(400, 'User is missing admin status'));
+                } else if (authorizedTypes.includes(Number(isAdmin) as Number as userTypes)) {
                     next();
                 } else {
                     next(new CustomError(403, 'Not enough permissions'));
