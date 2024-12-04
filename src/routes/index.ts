@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express'
-import PostsRouter from './User/Posts/addNewPost'
+import PostsRouter from './User/Posts'
 const router = express.Router()
 
 const test_router = async (req: Request, res: Response): Promise<void> => {

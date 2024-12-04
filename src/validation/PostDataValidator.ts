@@ -1,10 +1,8 @@
 import IPost from "../interfaces/PostDataInterface";
 import * as Yup from "yup";
+import { yupNumber, yupString } from "./YupBasics";
 
-async function PostDataValidator({ PostData }: { PostData: IPost }) {
-  const yupNumber = Yup.number().required();
-  const yupString = Yup.string().trim().required();
-
+async function PostDataValidator(PostData: IPost) {
   const ImageSchema = Yup.object().shape({
     url: yupString,
   });
@@ -12,9 +10,10 @@ async function PostDataValidator({ PostData }: { PostData: IPost }) {
   const yupImagesArray = Yup.array().of(ImageSchema);
 
   const schema = Yup.object().shape({
-    userId: yupString,
-    categoryId: yupNumber,
-    postContent: yupString,
+    userId: yupString.required("You need to login first before posting."),
+    petId: yupString,
+    categoryId: yupNumber.default(0),
+    postContent: yupString.required("You must enter Somthing before posting."),
     likesCount: yupNumber.default(0),
     commentsCount: yupNumber.default(0),
     images: yupImagesArray,

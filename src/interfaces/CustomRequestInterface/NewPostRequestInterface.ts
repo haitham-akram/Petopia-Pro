@@ -2,6 +2,7 @@ import { type Request } from "express";
 
 interface INewPostRequest {
   userId: string;
+  // isAdmin
   categoryId: number;
   postContent: string;
   isHaveImg: boolean;
@@ -14,8 +15,8 @@ interface INewPostRequest {
   ];
 }
 
-interface CustomPostRequest extends Request {
+interface CustomAddPostRequest extends Request {
   PostData?: INewPostRequest;
 }
 
-export type { INewPostRequest, CustomPostRequest };
+export type { INewPostRequest, CustomAddPostRequest };

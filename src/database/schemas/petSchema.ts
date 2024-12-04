@@ -7,10 +7,7 @@ const petSchema = new Schema(
     ownerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-    },
-    postId: {
-      type: Number, // The ID of the post associated with the pet
-      required: true,
+      require: true
     },
     petName: {
       type: String, // Name of the pet

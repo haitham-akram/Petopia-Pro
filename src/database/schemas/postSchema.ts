@@ -1,20 +1,28 @@
 import mongoose, { Schema } from "mongoose";
+import User from "./userSchema";
+import { NextFunction } from "express";
+import IPost from "../../interfaces/PostDataInterface";
 
 // Define the Post schema
 const postSchema = new Schema(
   {
-    // postId: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "Pet",
-    //   required: true,
-    // },
     userId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
     categoryId: {
       type: Number, // The ID of the category the post belongs to
+      default: 0,
       required: true,
+    },
+    petId: {
+      type: Schema.Types.ObjectId,
+      ref: "Pet",
+    },
+    productId: {
+      type: Schema.Types.ObjectId,
+      ref: "Product",
     },
     postContent: {
       type: String, // Content of the post
