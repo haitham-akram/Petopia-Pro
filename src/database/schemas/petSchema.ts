@@ -17,12 +17,12 @@ const petSchema = new Schema(
       type: Number, // Numeric value for pet type (e.g., 1 for dog, 2 for cat)
       required: true,
     },
-    age: {
-      type: Number, // Age of the pet
+    dob: {
+      type: String, // Date of Birth of the pet
       required: true,
     },
     gender: {
-      type: String, // Gender of the pet
+      type: Number, // Gender of the pet
       required: true,
     },
     healthStatus: {

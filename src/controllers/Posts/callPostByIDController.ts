@@ -25,25 +25,34 @@ async function callPostByIdController(
         data: {},
       };
     }
+    // console.log(PostData);
 
     if (PostData?.petId) {
+      // console.log("i have a pet")
       const PetData = await Pet.findById(PostData?.petId);
-      // if (PetData) {
-      AttachedData.PetData = PetData || {};
-      // }
+      if (
+        PetData &&
+        PetData.ownerId.toString() === PostData.userId.toString()
+      ) {
+        AttachedData.PetData = PetData;
+      }
     }
 
     if (PostData?.productId) {
       const ProductData = await Product.findById(PostData?.productId);
-      // if (ProductData) {
-      AttachedData.ProductData = ProductData || {};
-      // }
+      if (
+        ProductData &&
+        ProductData.userId!.toString() === PostData.userId.toString()
+      ) {
+        AttachedData.ProductData = ProductData || {};
+      }
     }
 
     respone = {
       message: `Post founded with ID ${postId}`,
       data: {
         PostData,
+        AttachedData,
       },
     };
 
