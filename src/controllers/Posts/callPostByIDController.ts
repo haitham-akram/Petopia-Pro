@@ -4,6 +4,7 @@ import Pet from "../../database/schemas/petSchema";
 import Product from "../../database/schemas/productSchema";
 import { callOneProductById } from "../../queries/Product";
 import { callOnePetById } from "../../queries/Pet";
+import CustomError from "../../helpers/CustomError";
 
 async function callPostByIdController(
   req: Request,
@@ -14,6 +15,10 @@ async function callPostByIdController(
     const postId = req.params.postId;
 
     const PostData = await Post.findById(postId);
+    if (!PostData) {
+      throw new CustomError(404, "There is no Post with this ID.");
+    }
+
     let AttachedData = {
       PetData: {},
       ProductData: {},
@@ -21,41 +26,39 @@ async function callPostByIdController(
 
     let respone;
 
-    if (!PostData) {
-      respone = {
-        message: `No Post founded with ID ${postId}`,
-        data: {},
-      };
-    }
-    // console.log(PostData);
+    switch (PostData?.categoryId) {
+      case 1:
+      case 2:
+        if (PostData?.petId) {
+          const PetData = await callOnePetById(PostData?.petId);
+          if (
+            PetData &&
+            PetData.ownerId.toString() === PostData.userId.toString()
+          ) {
+            AttachedData.PetData = PetData;
+          }
+        }
+        break;
 
-    if (PostData?.petId) {
-      // console.log("i have a pet")
-      const PetData = await callOnePetById(PostData?.petId);
-      if (
-        PetData &&
-        PetData.ownerId.toString() === PostData.userId.toString()
-      ) {
-        AttachedData.PetData = PetData;
-      }
-    }
-
-    if (PostData?.productId) {
-      const ProductData = await callOneProductById(PostData?.productId);
-      console.log(PostData?.productId)
-      if (
-        ProductData &&
-        ProductData.userId!.toString() === PostData.userId.toString()
-      ) {
-        AttachedData.ProductData = ProductData || {};
-      }
+      case 3:
+        if (PostData?.productId) {
+          const ProductData = await callOneProductById(PostData?.productId);
+          console.log(PostData?.productId);
+          if (
+            ProductData &&
+            ProductData.userId!.toString() === PostData.userId.toString()
+          ) {
+            AttachedData.ProductData = ProductData || {};
+          }
+        }
+        break;
     }
 
     respone = {
       message: `Post founded with ID ${postId}`,
       data: {
         PostData,
-        AttachedData,
+        ...AttachedData,
       },
     };
 
