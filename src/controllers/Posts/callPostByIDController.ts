@@ -2,6 +2,8 @@ import { type Response, type NextFunction, type Request } from "express";
 import Post from "../../database/schemas/postSchema";
 import Pet from "../../database/schemas/petSchema";
 import Product from "../../database/schemas/productSchema";
+import { callOneProductById } from "../../queries/Product";
+import { callOnePetById } from "../../queries/Pet";
 
 async function callPostByIdController(
   req: Request,
@@ -29,7 +31,7 @@ async function callPostByIdController(
 
     if (PostData?.petId) {
       // console.log("i have a pet")
-      const PetData = await Pet.findById(PostData?.petId);
+      const PetData = await callOnePetById(PostData?.petId);
       if (
         PetData &&
         PetData.ownerId.toString() === PostData.userId.toString()
@@ -39,7 +41,8 @@ async function callPostByIdController(
     }
 
     if (PostData?.productId) {
-      const ProductData = await Product.findById(PostData?.productId);
+      const ProductData = await callOneProductById(PostData?.productId);
+      console.log(PostData?.productId)
       if (
         ProductData &&
         ProductData.userId!.toString() === PostData.userId.toString()

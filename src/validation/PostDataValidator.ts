@@ -12,6 +12,7 @@ async function PostDataValidator(PostData: IPost) {
   const schema = Yup.object().shape({
     userId: yupString.required("You need to login first before posting."),
     petId: yupString,
+    productId: yupString,
     categoryId: yupNumber.default(0),
     postContent: yupString.required("You must enter Somthing before posting."),
     likesCount: yupNumber.default(0),
