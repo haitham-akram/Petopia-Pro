@@ -12,13 +12,13 @@ const verifyUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const userOtpData = await getOTP(email)
         if (!userOtpData) {
-            throw new CustomError(400, 'OTP not found for this email.');
+            throw new CustomError(400, 'this user is already verified.');
         }
         const isValid = verifyOTP(userOtpData.otp, otp, userOtpData.timestamp);
         if (isValid) {
             const verifiedUser = await verifyUserQuery(email, true)
             if (!verifiedUser) {
-                throw new CustomError(404, 'User not found');
+                throw new CustomError(404, 'User not found.');
             }
             await deleteOTP(email);
             const token = await generateToken({ id: verifiedUser.id, email: verifiedUser.email, isAdmin: verifiedUser.isAdmin });
