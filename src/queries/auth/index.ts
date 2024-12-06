@@ -1,4 +1,5 @@
 import loginQuery from "./login";
 import signupQuery from "./signup";
+import verifyUserQuery from "./verifyUser";
 
-export  { loginQuery, signupQuery }
+export { loginQuery, signupQuery, verifyUserQuery }

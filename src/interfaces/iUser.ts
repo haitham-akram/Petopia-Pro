@@ -9,8 +9,24 @@ interface UserType {
     phone?: string;
     isAdmin: boolean;
     status: 'active' | 'inactive';
+    verified: boolean,
     followerCount: number;
     followingCount: number;
+}
+interface UpdatedData {
+    fullName?: string,
+    email?: string,
+    password?: string;
+    userImage?: string;
+    profileImage?: string;
+    address?: string;
+    phone?: string;
+    isAdmin?: boolean;
+    status?: 'active' | 'inactive';
+    verified?: boolean,
+    followerCount?: number;
+    followingCount?: number;
+
 }
 interface UserPayload {
     id: number,
@@ -24,4 +40,4 @@ interface CustomRequest extends Request {
 }
 
 
-export type { UserType, UserPayload, CustomRequest };
+export type { UserType, UserPayload, CustomRequest, UpdatedData };
