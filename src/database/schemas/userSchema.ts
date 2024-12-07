@@ -40,6 +40,12 @@ const userSchema = new Schema(
       default: 'active',
       required: true,
     },
+    verified: {
+      type: Boolean, // Whether the user's email is verified
+      default: false,
+      required: true,
+    },
+
     followerCount: {
       type: Number, // Number of followers
       default: 0,

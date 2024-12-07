@@ -10,9 +10,12 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
         const { email, password } = await validateLogin(req.body)
         const user = await loginQuery({ email })
         if (user != null) {
-            const { id, isAdmin, email, password: hashedPassword, status } = user
+            const { id, isAdmin, email, password: hashedPassword, status, verified } = user
             if (status === 'inactive') {
                 throw new CustomError(400, 'Account is Inactive')
+            }
+            if (!verified) {
+                throw new CustomError(400, 'verify your account first!')
             }
             const isPasswordTrue = await bcrypt.compare(password, hashedPassword)
             if (isPasswordTrue) {

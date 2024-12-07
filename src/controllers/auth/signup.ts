@@ -1,14 +1,21 @@
 import { type NextFunction, type Request, type Response } from "express";
 import { UserType } from "../../interfaces/iUser";
-import { generateToken } from "../../helpers/authToken";
 import addUser from "../../helpers/addUser";
+import { generateOTP } from '../../helpers/otpHelpers';
+import { sendEmail } from '../../helpers/emailHelper';
+import { storeOTP } from "../../queries/otp";
 
 const signup = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const newUser = await addUser(req.body as UserType)
-        const token = await generateToken({ id: newUser.id, email: newUser.email, isAdmin: newUser.isAdmin });
-        res.cookie('token', token, { httpOnly: true }).status(201).json({
-            message: 'User Created Successfully',
+        const otp = generateOTP();
+        const email = newUser.email
+        storeOTP({ email, otp, timestamp: Date.now() })
+        
+        await sendEmail(email, 'Your OTP Code', `Your OTP is: ${otp}`);
+
+        res.status(201).json({
+            message: 'OTP sent to your email.',
             data: newUser
         })
     } catch (error) {
