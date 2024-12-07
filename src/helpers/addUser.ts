@@ -15,8 +15,9 @@ const addUser = async (data: UserType) => {
         userImage,
         profileImage,
         status,
-        followerCount = 0,
-        followingCount = 0
+        verified,
+        followerCount,
+        followingCount
     }: UserType = await validateSignup({
         ...(data), status: 'active'
     })
@@ -33,6 +34,7 @@ const addUser = async (data: UserType) => {
         profileImage,
         isAdmin: isAdminEmailFound,
         status,
+        verified,
         followerCount,
         followingCount
     })

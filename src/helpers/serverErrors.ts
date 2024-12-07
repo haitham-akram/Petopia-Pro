@@ -32,6 +32,11 @@ const serverError = (
 
         }
     }
+    if (message?.includes('jwt expired')) {
+        return res.status(401).json({
+            message: 'Token expired'
+        })
+    }
 
     return res.status(500).json({
         data: {

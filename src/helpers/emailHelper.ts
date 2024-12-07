@@ -13,14 +13,14 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-// Send email with OTP
-export async function sendEmail(toEmail: string, subject: string, message: string): Promise<void> {
+// Send email
+export async function sendEmail(toEmail: string, subject: string, message: string,  isHtml: boolean = false): Promise<void> {
     try {
         await transporter.sendMail({
             from: EMAIL_SENDER,
             to: toEmail,
             subject,
-            text: message,
+            ...(isHtml ? { html: message } : { text: message }),
         });
     } catch (error) {
         if (error instanceof Error) {
