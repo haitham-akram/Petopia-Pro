@@ -20,6 +20,6 @@ app.use(cors())
 app.use('/api/v1', router)
 app.set('port', PORT ?? 3000)
 
-app.use(serverError)
+// app.use(serverError)
 
 export default app

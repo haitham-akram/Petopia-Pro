@@ -1,4 +1,5 @@
 interface IPost {
+  _doc?: any;
   images?:
     | {
         url?: string;

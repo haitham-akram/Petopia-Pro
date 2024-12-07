@@ -1,7 +1,7 @@
 // All the Post possible controllers in one place
 
 import addNewPostController from "./addNewPostController";
-import searchPostController from "./searchPostController";
+import updatePostController from "./updatePostController";
 import callPostByIdController from "./callPostByIDController";
 
-export { addNewPostController, searchPostController, callPostByIdController };
+export { addNewPostController, updatePostController, callPostByIdController };
