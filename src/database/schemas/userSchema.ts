@@ -55,7 +55,7 @@ const userSchema = new Schema(
       type: Number, // Number of people the user is following
       default: 0,
       required: true,
-    }
+    },
   },
   {
     timestamps: true, // Automatically handle createdAt and updatedAt

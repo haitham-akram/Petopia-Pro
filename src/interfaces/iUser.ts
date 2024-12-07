@@ -31,7 +31,8 @@ interface UpdatedData {
 interface UserPayload {
     id: number,
     email: string,
-    isAdmin: boolean
+    isAdmin: boolean,
+    hashedPassword?: string
 }
 
 

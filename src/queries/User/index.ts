@@ -2,5 +2,6 @@
 
 import callPostCommentsByPostId from "./callPostCommentsByPostId"
 import updateUserQuery from "./updateUser"
+import getUserByEmail from "./getUserByEmail"
 
-export { callPostCommentsByPostId, updateUserQuery }
+export { callPostCommentsByPostId, updateUserQuery, getUserByEmail }

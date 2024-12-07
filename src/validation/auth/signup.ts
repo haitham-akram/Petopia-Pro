@@ -12,6 +12,7 @@ const validateSignup = async (data: UserType) => {
         address: string(),
         isAdmin: boolean().default(false),
         status: string().oneOf(['active', 'inactive']).required().default('active'),
+        verified: boolean().default(false),
         followerCount: number().default(0),
         followingCount: number().default(0)
     })
