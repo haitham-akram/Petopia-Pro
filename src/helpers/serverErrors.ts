@@ -38,6 +38,12 @@ const serverError = (
         })
     }
 
+    if (message?.includes('Cast to ObjectId failed for value ')) {
+        return res.status(404).json({
+            message: 'Not correct ID'
+        })
+    }
+
     return res.status(500).json({
         data: {
             message: err.message // will be changed to 'Internal Server Error' in production

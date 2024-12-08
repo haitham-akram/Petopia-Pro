@@ -4,7 +4,7 @@ import mongoose, { Schema } from "mongoose";
 // Define the PetType schema
 const petTypeSchema = new Schema(
   {
-    typeId: {
+    _Id: {
       type: Number, // Store typeId as a number
       required: true,
       unique: true, // Ensures no duplicate typeId

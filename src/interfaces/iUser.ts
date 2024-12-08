@@ -29,7 +29,7 @@ interface UpdatedData {
 
 }
 interface UserPayload {
-    id: number,
+    id: string,
     email: string,
     isAdmin: boolean,
     hashedPassword?: string
