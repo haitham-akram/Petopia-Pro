@@ -8,7 +8,7 @@ const { SECRET_KEY } = process.env
 
 const generateToken = async (payload: UserPayload) =>
     await new Promise((resolve, reject) => {
-        jwt.sign(payload, SECRET_KEY as Secret, { expiresIn: '1m' }, (err, token) => {
+        jwt.sign(payload, SECRET_KEY as Secret, { expiresIn: '1h' }, (err, token) => {
             if (err != null) reject(err)
             else resolve(token)
         })
