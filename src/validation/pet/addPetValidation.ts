@@ -5,7 +5,7 @@ const validateNewPet = async (data: IPet) => {
     const schema = object().shape({
         ownerId: string().required('owner is required'),
         petName: string().required('pet name is required'),
-        type: number().required('pet type is required'),
+        type: string().required('pet type is required'),
         dob: string().required('date of birth is required'),
         petImage: string(),
         gender: number().required('gender is required'),
