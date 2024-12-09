@@ -1,7 +1,7 @@
 interface IPet {
     ownerId: string;
     petName: string;
-    type: number;
+    type: string;
     petImage?: string;
     dob: string;
     gender: number;
@@ -12,7 +12,7 @@ interface IPet {
 interface PetData {
     ownerId: string;
     petName?: string;
-    type?: number;
+    type?: string;
     petImage?: string;
     dob?: string;
     gender?: number;

@@ -13,7 +13,7 @@ const petSchema = new Schema(
       required: true,
     },
     type: {
-      type: Number, // Numeric value for pet type (e.g., 1 for dog, 2 for cat)
+      type: String, // Numeric value for pet type (e.g., 1 for dog, 2 for cat)
       ref: "PetType",
       required: true,
     },
