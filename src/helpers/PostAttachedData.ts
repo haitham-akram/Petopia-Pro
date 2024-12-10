@@ -8,8 +8,19 @@ async function PostAttachedData(
   AttachedData: any
 ) {
   switch (validatedPostData.categoryId) {
+    // No dat should be attached
+    default:
+      delete validatedPostData.petId;
+      delete validatedPostData.productId;
+      break;
+
+    // Pet data attached value
     case 1:
     case 2:
+      if (!PostData.petId) {
+        throw new CustomError(400, "No Pet added");
+      }
+
       const addedPet = await callOnePetById(PostData.petId!);
       if (
         !addedPet ||
@@ -24,9 +35,14 @@ async function PostAttachedData(
         AttachedData.PetData = addedPet;
       }
       break;
+
+    // Product data attached value
     case 3:
+      if (!PostData.productId) {
+        throw new CustomError(400, "No Product added");
+      }
+
       const addedProduct = await callOneProductById(PostData.productId!);
-      console.log("addedProduct:", addedProduct);
       if (
         !addedProduct ||
         addedProduct.userId!.toString() !== validatedPostData.userId

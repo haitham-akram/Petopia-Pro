@@ -3,6 +3,7 @@ import { yupNumber, yupString } from "./YupBasics";
 import IUpdatePost from "../interfaces/PostUpdateDataInterface";
 
 async function PostUpdateDataValidator(PostData: IUpdatePost) {
+  
   const ImageSchema = Yup.object().shape({
     url: yupString,
   });
@@ -14,8 +15,6 @@ async function PostUpdateDataValidator(PostData: IUpdatePost) {
     productId: yupString,
     categoryId: yupNumber,
     postContent: yupString,
-    likesCount: yupNumber,
-    commentsCount: yupNumber,
     images: yupImagesArray,
   });
 

@@ -10,10 +10,10 @@ import {
 const PostsRouter = Router();
 
 // POST: Create a new resource
-PostsRouter.get("/:userId?", callPostsController);
+PostsRouter.get("/:postId", callPostByIdController);
+PostsRouter.get("/user/:userId?", callPostsController);
 PostsRouter.post("/", addNewPostController);
 PostsRouter.put("/:postId", updatePostController);
 // PostsRouter.get("/search", searchPostController);
-PostsRouter.get("/:postId", callPostByIdController);
 
 export default PostsRouter;

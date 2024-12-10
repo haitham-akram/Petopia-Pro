@@ -1,11 +1,10 @@
 import { type Response, type NextFunction, type Request } from "express";
 import Post from "../../database/schemas/postSchema";
-import Pet from "../../database/schemas/petSchema";
-import Product from "../../database/schemas/productSchema";
 import { callOneProductById } from "../../queries/Product";
 import { callOnePetById } from "../../queries/Pet";
 import CustomError from "../../helpers/CustomError";
 
+// All Done and tested ✅
 async function callPostByIdController(
   req: Request,
   res: Response,

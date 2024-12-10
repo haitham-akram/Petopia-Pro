@@ -2,20 +2,20 @@ import Post from "../../database/schemas/postSchema";
 import IUpdatePost from "../../interfaces/PostUpdateDataInterface";
 
 // update old Post by query using ID
-const UpdatePostById = async ({
+const updatePostById = async ({
   PostId,
   PostNewData,
 }: {
   PostId: string;
   PostNewData: IUpdatePost;
 }) => {
-  const UpdatedPost = await Post.findOneAndUpdate(
+  const updatedPost = await Post.findOneAndUpdate(
     { _id: PostId },
     { $set: PostNewData },
     { new: true }
   );
 
-  return UpdatedPost;
+  return updatedPost;
 };
 
-export default UpdatePostById;
+export default updatePostById;

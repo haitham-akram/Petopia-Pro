@@ -1,26 +1,25 @@
 import { type Response, type NextFunction, type Request } from "express";
 import {
   callOnePostById,
-  UpdatePostById,
-  ReplacePostById,
+  // updatePostById,
+  replacePostById,
 } from "../../queries/Posts";
 import IUpdatePost from "../../interfaces/PostUpdateDataInterface";
-import CustomError from "../../helpers/CustomError";
-import { callOneProductById } from "../../queries/Product";
-import { callOnePetById } from "../../queries/Pet";
-import Product from "../../database/schemas/productSchema";
 import UpdateAttachedData from "../../helpers/UpdatePostAttachedData";
 import PostUpdateDataValidator from "../../validation/PostUpdateDataValidator";
 
+// All Done and tested ✅
 async function updatePostController(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
   try {
+    // collect data
     const NewPostData = req.body.NewPostData as IUpdatePost;
     const postId = req.params.postId as string;
 
+    // validate data
     const validatedUpdatedData = await PostUpdateDataValidator(NewPostData);
 
     if (!validatedUpdatedData) {
@@ -29,6 +28,7 @@ async function updatePostController(
       });
     }
 
+    // call old post
     const PostData = await callOnePostById({ postId });
 
     if (!PostData) {
@@ -37,25 +37,37 @@ async function updatePostController(
       });
     }
 
-    const { status, message, AttachedData } = await UpdateAttachedData({
-      NewPostData,
-      PostData,
-    });
-
-    // console.log(status, message);
+    // update attached data and thier IDes (if it's exist)
+    const { status, message, AttachedData, postDataEdited } =
+      await UpdateAttachedData({
+        NewPostData,
+        PostData,
+      });
 
     if (status) {
       res.status(status).json(message);
     }
+    const PostNewData = { ...PostData?._doc, ...postDataEdited };
 
-    const PostNewData = { ...PostData?._doc, ...NewPostData };
+    switch (postDataEdited?.categoryId) {
+      case 1:
+      case 2:
+        delete PostNewData?.productId;
+        break;
 
-    const UpdatedPostData = await ReplacePostById({
+      case 3:
+        delete PostNewData?.petId;
+        break;
+
+      default:
+        delete PostNewData?.productId;
+        delete PostNewData?.petId;
+        break;
+    }
+    const UpdatedPostData = await replacePostById({
       PostId: postId,
       PostNewData,
     });
-
-    console.log(PostNewData);
 
     if (!UpdatedPostData) {
       res.status(202).json({

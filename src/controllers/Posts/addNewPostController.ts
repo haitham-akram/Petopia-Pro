@@ -4,13 +4,16 @@ import PostDataValidator from "../../validation/PostDataValidator";
 import IPost from "../../interfaces/PostDataInterface";
 import PostAttachedData from "../../helpers/PostAttachedData";
 
+
+
+// All Done and Tested ✅
 async function AddNewPostController(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
   try {
-    const { PostData }: { PostData: IPost } = req.body;
+    const { PostData }: { PostData: IPost } = req.body; 
 
     const validatedPostData = await PostDataValidator(PostData);
     let NewPost;

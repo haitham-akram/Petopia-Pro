@@ -8,8 +8,6 @@ interface IUpdatePost {
   petId?: string;
   productId?: string;
   postContent?: string;
-  likesCount?: number;
-  commentsCount?: number;
 }
 
 export default IUpdatePost;

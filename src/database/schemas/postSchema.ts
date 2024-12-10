@@ -15,6 +15,7 @@ const postSchema = new Schema(
       type: Number, // The ID of the category the post belongs to
       default: 0,
       required: true,
+      enum: [0, 1, 2, 3],
     },
     petId: {
       type: Schema.Types.ObjectId,

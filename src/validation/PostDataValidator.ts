@@ -13,10 +13,10 @@ async function PostDataValidator(PostData: IPost) {
     userId: yupString.required("You need to login first before posting."),
     petId: yupString,
     productId: yupString,
-    categoryId: yupNumber.default(0),
+    categoryId: yupNumber.transform((originalValue) => (0 > originalValue ||  originalValue > 3) ? 0:  originalValue),
     postContent: yupString.required("You must enter Somthing before posting."),
-    likesCount: yupNumber.default(0),
-    commentsCount: yupNumber.default(0),
+    likesCount: yupNumber.transform(() => 0),
+    commentsCount: yupNumber.transform(() => 0),
     images: yupImagesArray,
   });
 
