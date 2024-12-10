@@ -26,6 +26,7 @@ const addNewPet = async (req: CustomRequest, res: Response, next: NextFunction) 
             healthStatus,
             adoptionStatus
         })
+        
         res.status(201).json({
             message: "new pet created successfully.",
             data: newPet

@@ -6,39 +6,27 @@ const followerSchema = new Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
     follows: [
       {
         userId: {
-          type: Number, // The user ID
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
           required: true,
-          unique: true, // Ensures no duplicate followId
         },
-        follow: {
-          type: Number, // 0 (not following) or 1 (following) or 2 (mutual)
+        followState: {
+          type: Number, // 0 = not following, 1 = following, 2 = mutual
+          enum: [0, 1, 2],
           required: true,
         },
       },
     ],
-    number_of_followes:{
-      0:{
-        type: Number, // the count of each state to use as an index for pagination
-        required: true,
-      },
-      1:{
-        type: Number, // the count of each state to use as an index for pagination
-        required: true,
-      },
-      2:{
-        type: Number, // the count of each state to use as an index for pagination
-        required: true,
-      },
-    }
   },
-  {
-    timestamps: true, // Automatically handle createdAt and updatedAt
-  }
+  { timestamps: true }
 );
+
+
 
 // Create the Follower model from the schema
 const Follower = mongoose.model("Follower", followerSchema);
