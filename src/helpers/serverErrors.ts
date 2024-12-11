@@ -1,67 +1,52 @@
 import CustomError from './CustomError'
-import { type Request, type Response, type NextFunction, type ErrorRequestHandler } from 'express'
+import { type Request, type Response, type NextFunction } from 'express'
 
-const serverError: ErrorRequestHandler = (
-    err,
+const serverError = (
+    err: { name?: string, status?: number, message?: string, errors?: string[], original: { detail: string } },
     _req: Request,
     res: Response,
-    _next: NextFunction
-): void => {
+    next: NextFunction
+) => {
+    if (res.headersSent) {
+        return next(err);
+    }
+
     const { status, message, errors } = err
 
     if (err.name === 'ValidationError') {
-        res.status(400).json({
+        return res.status(400).json({
             data: { errors }
         })
     }
-
     if (err.name === 'JsonWebTokenError') {
-        res.status(401).json({
+        return res.status(401).json({
             message: 'Unauthorized'
         })
 
     }
-
     if (err instanceof CustomError) {
         if (status !== undefined) {
-            res.status(status).json({
+            return res.status(status).json({
                 message
             })
 
         }
     }
-
-    if (err.message?.includes('invalid input syntax for type integer')) {
-        res.status(400).json({
-            message: 'Please Enter a valid id number'
+    if (message?.includes('jwt expired')) {
+        return res.status(401).json({
+            message: 'Token expired'
         })
-
     }
 
-    if (err.message?.includes('is out of range for type integer')) {
-        res.status(400).json({
-            message: 'Please Enter a valid id number'
+    if (message?.includes('Cast to ObjectId failed for value ')) {
+        return res.status(404).json({
+            message: 'Not correct ID'
         })
-
     }
 
-    if (err.original?.detail.includes('is not present in table')) {
-        res.status(400).json({
-            message: "The post you are looking doesn't exist"
-        })
-
-    }
-
-    if (err.message?.includes('violates foreign key constraint')) {
-        res.status(400).json({
-            message: 'Bad Request, please try again later'
-        })
-
-    }
-
-    res.status(500).json({
+    return res.status(500).json({
         data: {
-            message: 'Internal server error'
+            message: err.message // will be changed to 'Internal Server Error' in production
         }
     })
 }

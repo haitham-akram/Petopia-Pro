@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
+import mongoose, { Schema } from "mongoose";
 
 // Define the Pet schema
 const petSchema = new Schema(
@@ -14,12 +13,16 @@ const petSchema = new Schema(
       required: true,
     },
     type: {
-      type: Number, // Numeric value for pet type (e.g., 1 for dog, 2 for cat)
+      type: String, // Numeric value for pet type (e.g., 1 for dog, 2 for cat)
+      ref: "PetType",
       required: true,
     },
     dob: {
       type: String, // Date of Birth of the pet
       required: true,
+    },
+    petImage: {
+      type: String,
     },
     gender: {
       type: Number, // Gender of the pet
@@ -32,6 +35,7 @@ const petSchema = new Schema(
     adoptionStatus: {
       type: String, // Adoption status of the pet (e.g., available, adopted)
       required: true,
+      enum: ['available', 'adopted'],
     }
   },
   {

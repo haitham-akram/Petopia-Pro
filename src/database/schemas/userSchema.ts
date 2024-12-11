@@ -30,16 +30,22 @@ const userSchema = new Schema(
       type: String, // User's phone number
     },
     isAdmin: {
-      type: Boolean, // Whether the post has an image or not
-      required: true,
+      type: Boolean,
       default: false,
+      required: true,
     },
     status: {
-      type: String, // Status of the user (active or deactive)
-      enum: ['active', 'deactive'], // Enum validation for status
+      type: String, // Status of the user (active or inactive)
+      enum: ['active', 'inactive'], // Enum validation for status
       default: 'active',
       required: true,
     },
+    verified: {
+      type: Boolean, // Whether the user's email is verified
+      default: false,
+      required: true,
+    },
+
     followerCount: {
       type: Number, // Number of followers
       default: 0,
@@ -49,7 +55,7 @@ const userSchema = new Schema(
       type: Number, // Number of people the user is following
       default: 0,
       required: true,
-    }
+    },
   },
   {
     timestamps: true, // Automatically handle createdAt and updatedAt
@@ -59,4 +65,4 @@ const userSchema = new Schema(
 // Create the User model from the schema
 const User = mongoose.model('User', userSchema);
 
-export default  User;
+export default User;
