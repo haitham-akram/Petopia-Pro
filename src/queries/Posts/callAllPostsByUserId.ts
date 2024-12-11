@@ -1,20 +1,29 @@
 import Post from "../../database/schemas/postSchema";
+import IQureyReturn from "../../interfaces/queryReturnInterface";
 
+// call old Post by query using userId
+const callOnePostByUserId = async ({
+  userId,
+}: {
+  userId: string;
+}): Promise<IQureyReturn> => {
+  // Save the Post to the database
+  let result = {
+    data: {},
+    error: {},
+  };
 
+  try {
+    const userPost = () => Post.find({ userId });
+    result.data = await userPost;
+  } catch (error) {
+    result.error = {
+      msg: "error in the post query",
+      err: error,
+    };
+  }
 
-// call old Posts service by User ID
-const callAllPostsByUserId = async ({ UserId }: { UserId: string }) => {
-    let result;
-    try {
-        result = await Post.find({
-            userId: UserId
-        });
-    } catch (error) {
-        result = error;
-    }
-
-    console.log('Post called:', result);
-    return result;
+  return result;
 };
 
-export default callAllPostsByUserId
+export default callOnePostByUserId;

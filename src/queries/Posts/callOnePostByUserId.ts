@@ -1,20 +1,28 @@
 import Post from "../../database/schemas/postSchema";
 
+// call old Post by query using userId
+const callOnePostByUserId = async ({
+  postId,
+  userId,
+}: {
+  postId: string;
+  userId: string;
+}) => {
+  // Save the Post to the database
+  let result = {
+    data: {},
+    error: {},
+  };
 
-// call old one Post service by Post Id and User ID
-const callOnePostByUserId = async ({ PostId, UserId }: { PostId: string, UserId: string }) => {
-    let result;
-    try {
-        result = await Post.find({
-            userId: UserId,
-            _id: PostId
-        });
-    } catch (error) {
-        result = error;
-    }
+  try {
+    const userPost = () => Post.findOne({ _id: postId, userId });
+    result.data = await userPost;
+  } catch (error) {
+    result.error = "error in the query";
+    return;
+  }
 
-    console.log('Post called:', result);
-    return result;
+  return result;
 };
 
 export default callOnePostByUserId;
