@@ -2,7 +2,7 @@ import { addNewPost } from "../../queries/Posts";
 import { type Response, type NextFunction, type Request } from "express";
 import PostDataValidator from "../../validation/PostDataValidator";
 import IPost from "../../interfaces/PostDataInterface";
-import PostAttachedData from "../../helpers/PostAttachedData";
+import PostAttachedData from "../../helpers/postAttachedData";
 
 
 

@@ -3,6 +3,6 @@
 import addNewPostController from "./addNewPostController";
 import updatePostController from "./updatePostController";
 import callPostByIdController from "./callPostByIDController";
-import callPostsController from "./callPostscontroller"
+import callPostsController from "./callPostsController"
 
 export { addNewPostController, updatePostController, callPostByIdController, callPostsController };

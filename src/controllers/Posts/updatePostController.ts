@@ -5,7 +5,7 @@ import {
   replacePostById,
 } from "../../queries/Posts";
 import IUpdatePost from "../../interfaces/PostUpdateDataInterface";
-import UpdateAttachedData from "../../helpers/UpdatePostAttachedData";
+import UpdateAttachedData from "../../helpers/updatePostAttachedData";
 import PostUpdateDataValidator from "../../validation/PostUpdateDataValidator";
 
 // All Done and tested ✅
