@@ -1,5 +1,5 @@
 import { type Response, type NextFunction, type Request } from "express";
-import { callPostOnPagenation } from "../../queries/Posts";
+import { callPostOnPagenation } from "../../queries/posts";
 
 
 // All Done and tested ✅

@@ -4,7 +4,7 @@ import addNewPost from "./addNewPost";
 // import addNewPostImage from "./addNewPostImage";
 import callOnePostById from "./callOnePostById";
 // import callAllPostsByUserId from "./callAllPostsByUserId";
-// import callOnePostByUserId from "./callOnePostByUserId";
+import deletePostById from "./deletePostById";
 import updatePostById from "./updatePostById";
 import replacePostById from "./replacePostData";
 import callPostOnPagenation from "./callPostOnPagenation";
@@ -14,8 +14,8 @@ export {
   // addNewPostImage,
   callOnePostById,
   // callAllPostsByUserId,
-  // callOnePostByUserId,
+  deletePostById,
   updatePostById,
   replacePostById,
-  callPostOnPagenation
+  callPostOnPagenation,
 };

@@ -1,12 +1,14 @@
-import { type Response, type NextFunction, type Request } from "express";
+import { type Response, type NextFunction } from "express";
 import Post from "../../database/schemas/postSchema";
-import { callOneProductById } from "../../queries/Product";
-import { callOnePetById } from "../../queries/Pet";
+import { callOneProductById } from "../../queries/product";
+import { getPetIdQuery } from "../../queries/pet";
 import CustomError from "../../helpers/CustomError";
+import { IPet } from "../../interfaces/iPet";
+import { type CustomRequest } from "../../interfaces/iUser";
 
 // All Done and tested ✅
 async function callPostByIdController(
-  req: Request,
+  req: CustomRequest,
   res: Response,
   next: NextFunction
 ) {
@@ -29,7 +31,14 @@ async function callPostByIdController(
       case 1:
       case 2:
         if (PostData?.petId) {
-          const PetData = await callOnePetById(PostData?.petId);
+          const PetData = (await getPetIdQuery(
+            PostData?.petId.toString()
+          )) as unknown as IPet;
+          console.log(
+            "PetData",
+            PetData.ownerId.toString(),
+            PostData.userId.toString()
+          );
           if (
             PetData &&
             PetData.ownerId.toString() === PostData.userId.toString()

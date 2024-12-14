@@ -1,5 +1,5 @@
-import { callOnePetById } from "../queries/Pet";
-import { callOneProductById } from "../queries/Product";
+import { callOnePetById } from "../queries/pet";
+import { callOneProductById } from "../queries/product";
 import CustomError from "./CustomError";
 
 async function PostAttachedData(

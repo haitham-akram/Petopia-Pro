@@ -1,7 +1,7 @@
 import IPost from "../interfaces/PostDataInterface";
 import IUpdatePost from "../interfaces/PostUpdateDataInterface";
-import { callOnePetById } from "../queries/Pet";
-import { callOneProductById } from "../queries/Product";
+import { getPetIdQuery } from "../queries/pet";
+import { callOneProductById } from "../queries/product";
 
 async function UpdateAttachedData({
   NewPostData,
@@ -35,7 +35,7 @@ async function UpdateAttachedData({
         };
       }
 
-      const newPet = await callOnePetById(NewPostData.petId!);
+      const newPet = await getPetIdQuery(NewPostData.petId!);
 
       if (!newPet) {
         return {
@@ -43,7 +43,6 @@ async function UpdateAttachedData({
           message: "The new pet are not exist.",
         };
       }
-      console.log("Pet", newPet);
       if (newPet!.ownerId!.toString() !== PostData.userId?.toString()) {
         return {
           status: 203,

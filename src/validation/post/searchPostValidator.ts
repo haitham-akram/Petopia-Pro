@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { yupNumber, yupString } from "./YupBasics";
+import { yupNumber, yupString } from "../YupBasics";
 
 async function SearchWordValidator(SearchWord: {
   SearchWord: string;
