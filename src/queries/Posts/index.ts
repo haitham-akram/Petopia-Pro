@@ -1,21 +1,19 @@
 // Post Model CRUD function depend on MongoDB connection and Mongoose schema
 
 import addNewPost from "./addNewPost";
-// import addNewPostImage from "./addNewPostImage";
 import callOnePostById from "./callOnePostById";
-// import callAllPostsByUserId from "./callAllPostsByUserId";
 import deletePostById from "./deletePostById";
-import updatePostById from "./updatePostById";
 import replacePostById from "./replacePostData";
 import callPostOnPagenation from "./callPostOnPagenation";
+import callPostExistence from "./callPostExistence";
+import callAllDataPost from "./callAllDataPost";
 
 export {
-  addNewPost,
-  // addNewPostImage,
-  callOnePostById,
-  // callAllPostsByUserId,
-  deletePostById,
-  updatePostById,
-  replacePostById,
-  callPostOnPagenation,
+  addNewPost, // used
+  callOnePostById, // used
+  deletePostById, // used
+  replacePostById, // used
+  callPostOnPagenation, // used
+  callPostExistence, // used
+  callAllDataPost, // used
 };

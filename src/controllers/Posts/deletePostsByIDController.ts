@@ -1,5 +1,9 @@
 import { type Response, type NextFunction } from "express";
-import { callOnePostById, deletePostById } from "../../queries/posts";
+import {
+  callOnePostById,
+  callPostExistence,
+  deletePostById,
+} from "../../queries/posts";
 import { type CustomRequest } from "../../interfaces/iUser";
 import CustomError from "../../helpers/CustomError";
 
@@ -18,15 +22,15 @@ async function deletePostsByIDController(
       new CustomError(404, "somthing wrong try again later");
     }
 
-    const postData = await callOnePostById({ postId });
+    const postData = await callPostExistence(postId);
 
-    if (!postData) {
-      new CustomError(401, "There is no post with this ID.");
-    }
+    if (!postData) throw new CustomError(401, "There is no post with this ID.");
 
-    if (postData.userId !== userId) {
-      new CustomError(401, "You don't have premission to delete this post.");
-    }
+    if (!postData!.userId || postData!.userId.toString() !== userId)
+      throw new CustomError(
+        401,
+        "You don't have premission to delete this post."
+      );
 
     deletePostById(postId as string).then(() =>
       res.status(200).json({
@@ -43,3 +47,10 @@ async function deletePostsByIDController(
 }
 
 export default deletePostsByIDController;
+
+
+/**
+ * Tests
+ *    test 1: Deleteing by Id work and check the user auth pretty good;
+ * 
+ */

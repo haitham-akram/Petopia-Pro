@@ -11,11 +11,11 @@ const { ADMIN, REGULAR } = userTypes;
 
 const PostsRouter = Router();
 
-// POST: Create a new resource
+// Get: Posts or one Post by Id
 PostsRouter.get("/:postId", callPostByIdController);
 
 // Get: Posts of one user using UserId
-PostsRouter.get("/user/:userId?", callPostsController);
+PostsRouter.get("/user/:userId", callPostsController);
 
 // Get: Create a new post
 PostsRouter.post("/", authenticate([ADMIN, REGULAR]), addNewPostController);

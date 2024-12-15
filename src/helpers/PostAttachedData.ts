@@ -1,4 +1,4 @@
-import { callOnePetById } from "../queries/pet";
+import { getPetIdQuery } from "../queries/pet";
 import { callOneProductById } from "../queries/product";
 import CustomError from "./CustomError";
 
@@ -21,10 +21,10 @@ async function PostAttachedData(
         throw new CustomError(400, "No Pet added");
       }
 
-      const addedPet = await callOnePetById(PostData.petId!);
+      const addedPet = await getPetIdQuery(PostData.petId!);
       if (
         !addedPet ||
-        addedPet.ownerId.toString() !== validatedPostData.userId
+        addedPet.ownerId!.toString() !== validatedPostData.userId
       ) {
         throw new CustomError(
           401,

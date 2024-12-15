@@ -1,17 +1,11 @@
 import Comment from "../../database/schemas/commentSchema";
-import { CommentDataType } from "../../interfaces/CommentDataType (Disabled)";
-
+import INewComment from "../../interfaces/NewCommentInterface";
 
 // Add new Post service
-const addNewComment = async ({
-  CommentData,
-}: {
-  CommentData: CommentDataType;
-}) => {
+const addNewComment = async (CommentData: INewComment) => {
   // Save the Comment to the database
   const newComment = new Comment(CommentData);
-  await newComment.save();
-  console.log("Comment saved:", newComment);
+  return await newComment.save();
 };
 
-export default addNewComment
+export default addNewComment;

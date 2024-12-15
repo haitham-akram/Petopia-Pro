@@ -23,7 +23,7 @@ async function AddNewPostController(
       ProductData: {},
     };
 
-    // console.log(validatedPostData)
+    
     const { ReadyPostData, ReadyAttachedData } = await PostAttachedData(
       validatedPostData,
       PostData,
@@ -45,3 +45,18 @@ async function AddNewPostController(
 }
 
 export default AddNewPostController;
+
+
+
+
+
+/**
+ * Tests:
+ *    test 1: add new post without pet or post (category: 0) Done and Work ✅👌
+ *    test 2: add new post with pet (category: 1 or 2) Done and Work ✅👌
+ *          test the owned pet and the other pets
+ * 
+ *    test 3: add new post with product (category 3) Done and Work ✅👌
+ *          test the owned product and the other products
+ * 
+ */

@@ -16,17 +16,8 @@ async function UpdateAttachedData({
   };
 
   switch (NewPostData.categoryId) {
-    default:
-      //   delete NewPostData pet Id;
-      //   delete NewPostData product Id;
-
-      break;
     case 1:
     case 2:
-      // Switch the type of the post and need to add Pet
-      // NewPostData.productId === undefined;
-      // delete NewPostData.productId;
-
       console.log("31", !NewPostData.petId);
       if (!NewPostData.petId) {
         return {
@@ -54,9 +45,6 @@ async function UpdateAttachedData({
       break;
 
     case 3:
-      // Switch the type of the post and need to add (Product)
-      // NewPostData?.petId! === null;
-      // delete NewPostData?.petId;
       if (!NewPostData.productId) {
         return {
           status: 200,
@@ -81,7 +69,6 @@ async function UpdateAttachedData({
       }
 
       AttachedData.ProductData = newProduct || {};
-
       break;
   }
 
