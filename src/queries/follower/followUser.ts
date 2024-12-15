@@ -7,7 +7,7 @@ const followUserQuery = async (followerId: string, followingId: string) => {
     if (alreadyFollowing) {
         throw new CustomError(400, "Already following this user");
     }
-    (await Follower.create({ followerId, followingId })).save();
+    await Follower.create({ followerId, followingId })
     await User.findOneAndUpdate({ _id: followerId }, { $inc: { followingCount: 1 } });
     await User.findOneAndUpdate({ _id: followingId }, { $inc: { followerCount: 1 } });
 };
