@@ -3,9 +3,10 @@ import mongoose, { Schema } from "mongoose";
 // Define the Product schema
 const productSchema = new Schema(
   {
-    postId: {
-      type: Number, // The ID of the associated post
-      required: true,
+    userId: {
+      type: mongoose.Schema.Types.ObjectId, // refer user id
+      ref: "User",
+      require: true,
     },
     title: {
       type: String, // Title of the product

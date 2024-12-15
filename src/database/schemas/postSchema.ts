@@ -1,27 +1,32 @@
 import mongoose, { Schema } from "mongoose";
+import User from "./userSchema";
+import { NextFunction } from "express";
+import IPost from "../../interfaces/PostDataInterface";
 
 // Define the Post schema
 const postSchema = new Schema(
   {
-    // postId: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "Pet",
-    //   required: true,
-    // },
     userId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
     categoryId: {
       type: Number, // The ID of the category the post belongs to
+      default: 0,
       required: true,
+      enum: [0, 1, 2, 3],
+    },
+    petId: {
+      type: Schema.Types.ObjectId,
+      ref: "Pet",
+    },
+    productId: {
+      type: Schema.Types.ObjectId,
+      ref: "Product",
     },
     postContent: {
       type: String, // Content of the post
-      required: true,
-    },
-    isHaveImg: {
-      type: Boolean, // Whether the post has an image or not
       required: true,
     },
     likesCount: {
@@ -31,7 +36,15 @@ const postSchema = new Schema(
     commentsCount: {
       type: Number, // Number of comments on the post
       default: 0, // Default value is 0
-    }
+    },
+    images: [
+      {
+        url: {
+          type: String, // Image Url
+          required: true,
+        },
+      },
+    ],
   },
   {
     timestamps: true, // Automatically handle createdAt and updatedAt
@@ -39,6 +52,6 @@ const postSchema = new Schema(
 );
 
 // Create the Post model from the schema
-const Post = mongoose.model('Post', postSchema);
+const Post = mongoose.model("Post", postSchema);
 
 export default Post;

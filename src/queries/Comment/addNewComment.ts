@@ -1,5 +1,5 @@
 import Comment from "../../database/schemas/commentSchema";
-import { CommentDataType } from "../../interfaces/CommentDataType";
+import { CommentDataType } from "../../interfaces/CommentDataType (Disabled)";
 
 
 // Add new Post service
