@@ -1,4 +1,6 @@
-import { getFollowCounts } from "./getFollowCounts";
-import addFollowingQuery from "./addFollowingQuery";
+import followUserQuery from "./followUser";
 import getFollowerQuery from "./getFollower";
-export { getFollowCounts, addFollowingQuery, getFollowerQuery };
+import unFollowUserQuery from "./unfollow";
+import getMutualFollowsQuery from "./getMutual";
+
+export { followUserQuery, getFollowerQuery, unFollowUserQuery, getMutualFollowsQuery };

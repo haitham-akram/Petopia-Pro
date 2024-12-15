@@ -1,12 +1,12 @@
 import { object, string } from 'yup'
 type follow = {
-    userId: string,
-    wantedUserId: string
+    followerId: string,
+    followingId: string
 }
 const validateFollow = async (follow: follow) => {
     const schema = object().shape({
-        userId: string().required('userId is required'),
-        wantedUserId: string().required('wantedUserId is required')
+        followerId: string().required('FollowerId is required'),
+        followingId: string().required('FollowingId is required')
     })
     return await schema.validate(follow, { abortEarly: false })
 
