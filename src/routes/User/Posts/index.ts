@@ -11,7 +11,7 @@ const { ADMIN, REGULAR } = userTypes;
 
 const PostsRouter = Router();
 
-// Get: Posts or one Post by Id
+// Get: Posts or one Post by Id with pagination
 PostsRouter.get("/:postId", callPostByIdController);
 
 // Get: Posts of one user using UserId

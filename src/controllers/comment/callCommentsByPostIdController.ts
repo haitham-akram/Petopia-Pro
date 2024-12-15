@@ -1,6 +1,6 @@
 import { type Response, type NextFunction, type Request } from "express";
 import { callCommentsByPostId } from "../../queries/comment";
-import { callOnePostById } from "../../queries/posts";
+// import { callOnePostById } from "../../queries/posts";
 import CustomError from "../../helpers/CustomError";
 
 async function callCommentsByPostIdController(
@@ -10,20 +10,17 @@ async function callCommentsByPostIdController(
 ) {
   try {
     const postId = req.params.postId;
-    const index = req.query.index;
-    const count = req.query.count;
-    console.log(req.query)
+    const { index, count } = req.query;
 
+    const comments = (await callCommentsByPostId(
+      postId,
+      index as string,
+      count as string
+    )) as [];
 
+    console.log(comments);
 
-
-    const comments = await callCommentsByPostId(postId, index as string, count as string);
-
-
-
-
-
-    if (!comments) new CustomError(404, "There is no comments yet.");
+    if (!comments.length) new CustomError(404, "There is no comments yet.");
 
     res.status(200).json({
       message: `This is the comments for this post.`,

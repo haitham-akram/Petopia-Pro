@@ -2,12 +2,12 @@
 
 import addNewComment from "./addNewComment";
 import callPostCommentsByPostId from "./callCommentsByPostId";
-import callAllPostCommentsByUserId from "./callAllPostsCommentsByUserId";
 import callCommentsByPostId from "./callCommentsByPostId";
+import deleteComment from "./deleteComment";
 
 export {
   addNewComment,
   callPostCommentsByPostId,
-  callAllPostCommentsByUserId,
   callCommentsByPostId,
+  deleteComment,
 };

@@ -25,8 +25,6 @@ async function addNewCommentController(
       userId,
     } as INewComment);
 
-    console.log(validatedCommentData);
-
     const addedComment = await addNewComment(
       validatedCommentData as unknown as INewComment
     );

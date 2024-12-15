@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import Post from "./postSchema";
 
 // Define the Comment schema
 const commentSchema = new Schema(
@@ -20,6 +21,24 @@ const commentSchema = new Schema(
     timestamps: true, // Automatically handle createdAt and updatedAt
   }
 );
+
+commentSchema.post("save", async function (doc, next) {
+  try {
+    await Post.findByIdAndUpdate(doc.postId, { $inc: { commentsCount: 1 } });
+    next();
+  } catch (err) {
+    next();
+  }
+});
+
+commentSchema.post("deleteOne", async function (doc, next) {
+  try {
+    await Post.findByIdAndUpdate(doc.postId, { $inc: { commentsCount: -1 } });
+    next();
+  } catch (err) {
+    next();
+  }
+});
 
 // Create the Comment model from the schema
 const Comment = mongoose.model("Comment", commentSchema);
