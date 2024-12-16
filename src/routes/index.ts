@@ -11,14 +11,9 @@ const router = express.Router()
 router.use('/auth', authRouter)
 router.use('/pet', petRouter)
 router.use('/pet-type', petTypeRouter)
-<<<<<<< HEAD
-
-// Posts Routes
-=======
 router.use('/follower', followerRouter)
->>>>>>> 8949781fc642d57a04e5101feee8adee78c5711e
+// Posts Routes
 router.use('/posts', PostsRouter)
-
 // Comments Routes
 router.use('/comments', CommentsRouter)
 
