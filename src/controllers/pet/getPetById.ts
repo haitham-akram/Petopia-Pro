@@ -8,10 +8,10 @@ const getPetById = async (req: CustomRequest, res: Response, next: NextFunction)
         const { id } = req.params
         const pet = await getPetIdQuery(id)
         if (!pet) {
-            throw new CustomError(400, 'pet not found')
+            throw new CustomError(400, 'Pet not found')
         }
         res.status(200).json({
-            message: "Pet sound successfully",
+            message: "Pet found successfully",
             data: pet
         })
     } catch (error) {
