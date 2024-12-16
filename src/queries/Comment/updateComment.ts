@@ -5,14 +5,15 @@ import Comment from "../../database/schemas/commentSchema";
 const updateComment = async (
   commentId: Types.ObjectId | string,
   userId: Types.ObjectId | string,
-  CommentData: { commentText: string }
+  commentData: { commentText: string }
 ) => {
   // Save the Comment to the database
   const UpdatedComment = Comment.findByIdAndUpdate(
     { _id: commentId, userId },
-    CommentData
+    commentData,
+    { new: true }
   );
-  
+
   return await UpdatedComment;
 };
 

@@ -15,9 +15,9 @@ async function addNewCommentController(
     const userId = req?.user?.id!;
     const commentData = req.body.commentData;
 
-    if (!userId) new CustomError(404, "You don't have an account.");
+    if (!userId) throw new CustomError(404, "You don't have an account.");
 
-    if (!postId) new CustomError(404, "This post does not exits.");
+    if (!postId) throw new CustomError(404, "This post does not exits.");
 
     const validatedCommentData = await commentDataValidator({
       ...commentData,

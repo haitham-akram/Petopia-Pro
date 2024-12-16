@@ -1,9 +1,5 @@
 import { type Response, type NextFunction } from "express";
-import {
-  callOnePostById,
-  callPostExistence,
-  deletePostById,
-} from "../../queries/posts";
+import { callPostExistence, deletePostById } from "../../queries/posts";
 import { type CustomRequest } from "../../interfaces/iUser";
 import CustomError from "../../helpers/CustomError";
 
@@ -14,7 +10,7 @@ async function deletePostsByIDController(
   next: NextFunction
 ) {
   try {
-    const userId = req?.user?.id;
+    const userId = req?.user?.id as string;
     const userEmail = req?.user?.email;
     const postId = req.params.postId as string;
 
@@ -22,21 +18,13 @@ async function deletePostsByIDController(
       new CustomError(404, "somthing wrong try again later");
     }
 
-    const postData = await callPostExistence(postId);
+    const deletedPost = await deletePostById(postId, userId);
 
-    if (!postData) throw new CustomError(401, "There is no post with this ID.");
+    if (!deletedPost) throw new CustomError(404, "Post was not found.");
 
-    if (!postData!.userId || postData!.userId.toString() !== userId)
-      throw new CustomError(
-        401,
-        "You don't have premission to delete this post."
-      );
-
-    deletePostById(postId as string).then(() =>
-      res.status(200).json({
-        message: `This post have been deleted by user ${userEmail}, and will be unable to recall it again.`,
-      })
-    );
+    res.status(200).json({
+      message: `This post have been deleted by user ${userEmail}, and will be unable to recall it again.`,
+    });
   } catch (err) {
     // Passing the error to the route just in case it happened
     next(err);
@@ -48,9 +36,8 @@ async function deletePostsByIDController(
 
 export default deletePostsByIDController;
 
-
 /**
  * Tests
  *    test 1: Deleteing by Id work and check the user auth pretty good;
- * 
+ *
  */

@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import Post from "./postSchema";
+import CustomError from "../../helpers/CustomError";
 
 // Define the Comment schema
 const commentSchema = new Schema(
@@ -7,10 +8,12 @@ const commentSchema = new Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      require: true,
     },
     postId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Post",
+      require: true,
     },
     commentText: {
       type: String, // Store commentText as a string
@@ -22,10 +25,16 @@ const commentSchema = new Schema(
   }
 );
 
-commentSchema.post("save", async function (doc, next) {
+commentSchema.pre("save", async function (next) {
   try {
-    await Post.findByIdAndUpdate(doc.postId, { $inc: { commentsCount: 1 } });
-    next();
+    const post = await Post.findByIdAndUpdate(this.postId, {
+      $inc: { commentsCount: 1 },
+    });
+    if (!post) {
+      next(new CustomError(404, "No Post with this Id."));
+    } else {
+      next();
+    }
   } catch (err) {
     next();
   }

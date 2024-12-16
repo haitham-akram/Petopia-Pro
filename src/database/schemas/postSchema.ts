@@ -2,6 +2,7 @@ import mongoose, { Schema } from "mongoose";
 import User from "./userSchema";
 import { NextFunction } from "express";
 import IPost from "../../interfaces/PostDataInterface";
+import Comment from "./commentSchema";
 
 // Define the Post schema
 const postSchema = new Schema(
@@ -51,6 +52,15 @@ const postSchema = new Schema(
   }
 );
 
+postSchema.post("findOneAndDelete", async function (doc, next) {
+  try {
+    console.log(doc);
+    await Comment.deleteMany({ postId: doc._id });
+    next();
+  } catch (err) {
+    next();
+  }
+});
 // Create the Post model from the schema
 const Post = mongoose.model("Post", postSchema);
 
