@@ -1,11 +1,15 @@
 import Post from "../../database/schemas/postSchema";
-import IPost from "../../interfaces/PostDataInterface";
-import IQureyReturn from "../../interfaces/queryReturnInterface";
+// import IPost from "../../interfaces/PostDataInterface";
 
 // call old Post by query
-const callOnePostById = async ({ postId }: { postId: string }) => {
+const callOnePostById = async (postId: string) => {
   // Save the Post to the database
-  return (await Post.findById(postId)) as IPost;
+  const post = await Post.findById(postId)
+    .populate("userId", "fullName email userImage -_id")
+    .populate("productId")
+    .populate("petId");
+
+  return post;
 };
 
 export default callOnePostById;

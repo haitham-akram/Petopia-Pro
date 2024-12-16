@@ -1,16 +1,19 @@
-import { type Response, type NextFunction, type Request } from "express";
+import { type Response, type NextFunction } from "express";
 import {
-  callOnePostById,
+  callAllDataPost,
+  // callOnePostById,
   // updatePostById,
   replacePostById,
-} from "../../queries/Posts";
+} from "../../queries/posts";
 import IUpdatePost from "../../interfaces/PostUpdateDataInterface";
 import UpdateAttachedData from "../../helpers/updatePostAttachedData";
-import PostUpdateDataValidator from "../../validation/PostUpdateDataValidator";
+import PostUpdateDataValidator from "../../validation/post/postUpdateDataValidator";
+import { type CustomRequest } from "../../interfaces/iUser";
+import IPost from "../../interfaces/PostDataInterface";
 
 // All Done and tested ✅
 async function updatePostController(
-  req: Request,
+  req: CustomRequest,
   res: Response,
   next: NextFunction
 ) {
@@ -18,6 +21,7 @@ async function updatePostController(
     // collect data
     const NewPostData = req.body.NewPostData as IUpdatePost;
     const postId = req.params.postId as string;
+    const userId = req.user?.id;
 
     // validate data
     const validatedUpdatedData = await PostUpdateDataValidator(NewPostData);
@@ -29,12 +33,20 @@ async function updatePostController(
     }
 
     // call old post
-    const PostData = await callOnePostById({ postId });
+    const PostData = (await callAllDataPost(postId)) as unknown as IPost;
 
     if (!PostData) {
-      res.status(202).json({
+      res.status(404).json({
         message: "No post to updated.",
       });
+      return;
+    }
+
+    if (PostData.userId.toString() !== userId) {
+      res.status(401).json({
+        message: "Not authorized operation.",
+      });
+      return;
     }
 
     // update attached data and thier IDes (if it's exist)
@@ -46,6 +58,7 @@ async function updatePostController(
 
     if (status) {
       res.status(status).json(message);
+      return;
     }
     const PostNewData = { ...PostData?._doc, ...postDataEdited };
 
@@ -73,6 +86,7 @@ async function updatePostController(
       res.status(202).json({
         message: "Something went wrong.",
       });
+      return;
     }
 
     res.status(202).json({
@@ -80,6 +94,7 @@ async function updatePostController(
       UpdatedPostData,
       ...AttachedData,
     });
+    return;
   } catch (err) {
     // Passing the error to the route just in case it happened
     next(err);
@@ -89,3 +104,13 @@ async function updatePostController(
 }
 
 export default updatePostController;
+
+/**
+ *
+ * Tests
+ *    test 1:Update from category 0 to 1 or 2 and add pet Done 👌✅
+ *    test 2:Update from category 1 or 2 to 0 and remove the pet Done 👌✅
+ *    test 3:Update from category 1 or 2 to 0 and remove the pet Done 👌✅
+ *    test 4:Update from category 3 to 1 or 2 and replace the pet with product Done 👌✅
+ *    test 5:Update from category 3 to 0 and remove the product Done 👌✅
+ */

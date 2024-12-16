@@ -1,8 +1,9 @@
-import IPost from "../interfaces/PostDataInterface";
+// import IPost from "../../interfaces/PostDataInterface";
 import * as Yup from "yup";
-import { yupNumber, yupString } from "./YupBasics";
+import { yupNumber, yupString } from "../YupBasics";
+import INewPost from "../../interfaces/NewPostInterface";
 
-async function PostDataValidator(PostData: IPost) {
+async function PostDataValidator(PostData: INewPost) {
   const ImageSchema = Yup.object().shape({
     url: yupString,
   });

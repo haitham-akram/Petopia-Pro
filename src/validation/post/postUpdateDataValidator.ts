@@ -1,6 +1,6 @@
 import * as Yup from "yup";
-import { yupNumber, yupString } from "./YupBasics";
-import IUpdatePost from "../interfaces/PostUpdateDataInterface";
+import { yupNumber, yupString } from "../YupBasics";
+import IUpdatePost from "../../interfaces/PostUpdateDataInterface";
 
 async function PostUpdateDataValidator(PostData: IUpdatePost) {
   

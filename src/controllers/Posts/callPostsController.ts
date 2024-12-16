@@ -1,6 +1,5 @@
 import { type Response, type NextFunction, type Request } from "express";
-import { callPostOnPagenation } from "../../queries/Posts";
-
+import { callPostOnPagenation } from "../../queries/posts";
 
 // All Done and tested ✅
 async function callPostsController(
@@ -10,18 +9,19 @@ async function callPostsController(
 ) {
   try {
     const { index, count } = req.query;
-    const userId = req.params.userId as string;
+    const { userId } = req.params;
 
     const allPosts = await callPostOnPagenation(
       index as string,
       count as string,
-      userId
+      userId as string
     );
 
     if (!allPosts.length) {
       res.status(404).json({
         message: "No posts found for this search",
       });
+      return;
     }
 
     res.status(200).json({
@@ -33,6 +33,7 @@ async function callPostsController(
     });
   } catch (err) {
     // Passing the error to the route just in case it happened
+    console.log(err);
     next(err);
   }
 
@@ -41,3 +42,11 @@ async function callPostsController(
 }
 
 export default callPostsController;
+
+/**
+ * Tests
+ *  test 1: using user Id Done ✅👌
+ *  test 2: without user Id Done ✅👌
+ *  test 3: pagination (with and without it) Done ✅👌
+ *  
+ */
