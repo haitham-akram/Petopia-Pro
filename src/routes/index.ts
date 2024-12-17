@@ -3,8 +3,8 @@ import authRouter from "./auth";
 import petRouter from "./pet";
 import petTypeRouter from "./petType";
 import followerRouter from "./follower";
-import PostsRouter from "./User/Posts";
-import CommentsRouter from "./User/Comments";
+import PostsRouter from "./User/posts";
+import CommentsRouter from "./User/comments";
 import LikeRouter from "./User/likes";
 
 const router = express.Router();

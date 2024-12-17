@@ -5,7 +5,7 @@ import {
   updatePostController,
   callPostsController,
   deletePostsByIDController,
-} from "../../../controllers/Posts";
+} from "../../../controllers/posts";
 import authenticate, { userTypes } from "../../../middlewares/auth";
 const { ADMIN, REGULAR } = userTypes;
 

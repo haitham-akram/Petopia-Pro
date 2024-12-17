@@ -8,12 +8,10 @@ interface INewLike {
 }
 
 // Add new Like query
+// This query work as toogle are add on one call and remove on the scond call
 const addNewLike = async (LikeData: INewLike) => {
   // Save the Like to the database
-  const newLike = new Like({
-    ...LikeData,
-    isComment: LikeData.isComment,
-  });
+  const newLike = new Like(LikeData);
   return await newLike.save();
 };
 

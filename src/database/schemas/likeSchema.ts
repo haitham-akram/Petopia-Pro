@@ -9,15 +9,16 @@ const likeSchema = new Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
     relateId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
     isComment: {
-      type: Number,
+      type: Boolean,
+      default: false,
       require: true,
-      enum: [0, 1], // 0 for post, 1 for comment
     },
   },
   {
@@ -32,30 +33,30 @@ likeSchema.pre("save", async function (next) {
 
     if (alreadyLikes) {
       await collection.deleteOne({ userId, relateId });
-      next(new CustomError(200, "the like are deleted"));
+      if (!isComment) {
+        await Post.findByIdAndUpdate(relateId, {
+          $inc: { likesCount: -1 },
+        });
+        return next(new CustomError(200, "the like are deleted"));
+      }
     }
 
+    let relateCollection: typeof Post | typeof Comment = Comment;
+
     // Check the type of relateId (Post or Comment)
-    if (isComment) {
-      // Check if isComment is 1 for Comment
-      let commentExist = await Comment.findById(relateId);
-
-      if (!commentExist) {
-        return next(new CustomError(404, "No comment found with this Id."));
-      }
-      commentExist;
-    } else {
-      // Check if isComment is 0 for Post
-      let postExist = await Post.findById(relateId);
-
-      if (!postExist) {
-        return next(new CustomError(404, "No post found with this Id."));
-      }
-
+    if (!isComment) {
       await Post.findByIdAndUpdate(relateId, {
         $inc: { likesCount: 1 },
       });
+      next();
     }
+
+    let commentExist = await relateCollection.findById(relateId);
+
+    if (!commentExist) {
+      return next(new CustomError(404, "No comment found with this Id."));
+    }
+    next();
   } catch (err) {
     next(new CustomError(500, "Error from the server, try again later."));
   }

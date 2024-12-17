@@ -1,21 +1,21 @@
 import { type Response, type NextFunction } from "express";
 import { type CustomRequest } from "../../interfaces/iUser";
-import { updateLike } from "../../queries/likes";
+import { callUserLikes } from "../../queries/likes";
 
-async function addNewLikeController(
+async function callUserLikesController(
   req: CustomRequest,
   res: Response,
   next: NextFunction
 ) {
   try {
-    const userId = req.user!.id as string;
-    const relateId = req.params.relateId as string;
-    const isComment = Object.keys(req.query).includes("comment");
+    const userId = req.user?.id as string;
+    const { index, limit } = req.query;
 
-    await updateLike({ userId, relateId, isComment });
+    const likes = await callUserLikes(userId, index as string, limit as string);
 
-    res.status(201).json({
-      message: "Like have been added.",
+    res.status(200).json({
+      message: "all likes are called",
+      likes,
     });
   } catch (err) {
     // Passing the error to the route just in case it happened
@@ -26,4 +26,4 @@ async function addNewLikeController(
   next();
 }
 
-export default addNewLikeController;
+export default callUserLikesController;
