@@ -1,25 +1,20 @@
-import express from 'express'
-import authRouter from './auth'
-import petRouter from './pet'
-import petTypeRouter from './petType'
-import followerRouter from './follower'
-import PostsRouter from './User/Posts'
-import CommentsRouter from './User/Comments'
+import express from "express";
+import authRouter from "./auth";
+import petRouter from "./pet";
+import petTypeRouter from "./petType";
+import followerRouter from "./follower";
+import PostsRouter from "./User/Posts";
+import CommentsRouter from "./User/Comments";
+import LikeRouter from "./User/likes";
 
-const router = express.Router()
+const router = express.Router();
 
-router.use('/auth', authRouter)
-router.use('/pet', petRouter)
-router.use('/pet-type', petTypeRouter)
-<<<<<<< HEAD
+router.use("/auth", authRouter);
+router.use("/pet", petRouter);
+router.use("/pet-type", petTypeRouter);
+router.use("/follower", followerRouter);
+router.use("/posts", PostsRouter);
+router.use("/comments", CommentsRouter);
+router.use("/likes", LikeRouter);
 
-// Posts Routes
-=======
-router.use('/follower', followerRouter)
->>>>>>> 8949781fc642d57a04e5101feee8adee78c5711e
-router.use('/posts', PostsRouter)
-
-// Comments Routes
-router.use('/comments', CommentsRouter)
-
-export default router
+export default router;
