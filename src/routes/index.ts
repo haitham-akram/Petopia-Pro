@@ -5,6 +5,7 @@ import petTypeRouter from './petType'
 import followerRouter from './follower'
 import PostsRouter from './User/Posts'
 import CommentsRouter from './User/Comments'
+import BookmarkRouter from './bookmark'
 
 const router = express.Router()
 
@@ -16,5 +17,5 @@ router.use('/follower', followerRouter)
 router.use('/posts', PostsRouter)
 // Comments Routes
 router.use('/comments', CommentsRouter)
-
+router.use('/bookmark', BookmarkRouter)
 export default router
