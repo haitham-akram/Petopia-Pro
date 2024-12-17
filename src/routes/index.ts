@@ -3,8 +3,8 @@ import authRouter from './auth'
 import petRouter from './pet'
 import petTypeRouter from './petType'
 import followerRouter from './follower'
-import PostsRouter from './User/Posts'
-import CommentsRouter from './User/Comments'
+import PostsRouter from './user/posts'
+import CommentsRouter from './user/comments'
 import BookmarkRouter from './bookmark'
 
 const router = express.Router()
