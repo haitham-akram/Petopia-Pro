@@ -3,6 +3,7 @@ import User from "./userSchema";
 import { NextFunction } from "express";
 import IPost from "../../interfaces/PostDataInterface";
 import Comment from "./commentSchema";
+import { bookmark } from "../../controllers/bookmark";
 
 // Define the Post schema
 const postSchema = new Schema(
@@ -46,6 +47,10 @@ const postSchema = new Schema(
         },
       },
     ],
+    bookmarkCount: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true, // Automatically handle createdAt and updatedAt
