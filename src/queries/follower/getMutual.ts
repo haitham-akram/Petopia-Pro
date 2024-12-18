@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import Follower from "../../database/schemas/followerSchema"
 
-const getMutualFollowsQuery = async (userId: string, page: number = 0, limit: number = 10) => {
+const getMutualFollowsQuery = async (userId: string, search: string, page: number = 0, limit: number = 10) => {
 
 
     const mutualUsers = await Follower.aggregate([
@@ -28,6 +28,9 @@ const getMutualFollowsQuery = async (userId: string, page: number = 0, limit: nu
             },
         },
         { $unwind: "$user" },
+        {
+            $match: search ? { 'user.fullName': { $regex: `.*${search}.*`, $options: 'i' } } : {}
+        },
         {
             $project: {
                 user: { _id: 1, fullName: 1, email: 1 }, // Include only desired user fields
