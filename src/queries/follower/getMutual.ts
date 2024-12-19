@@ -33,7 +33,7 @@ const getMutualFollowsQuery = async (userId: string, search: string, page: numbe
         },
         {
             $project: {
-                user: { _id: 1, fullName: 1, email: 1 }, // Include only desired user fields
+                user: { _id: 1, fullName: 1, email: 1, userImage: 1 },
                 createdAt: "$mutual.createdAt",
                 updatedAt: "$mutual.updatedAt",
             },

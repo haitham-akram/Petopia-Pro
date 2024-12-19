@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Follower from "../../database/schemas/followerSchema";
 
 const getFollowerQuery = async (userId: string, status: 'follower' | 'following', search: string, page: number = 1, limit: number = 10) => {
@@ -5,25 +6,35 @@ const getFollowerQuery = async (userId: string, status: 'follower' | 'following'
     const skip = (page) * limit;
 
     const statusObj = {
-        following: { followerId: userId },
-        follower: { followingId: userId }
+        following: { followerId: new mongoose.Types.ObjectId(userId) },
+        follower: { followingId: new mongoose.Types.ObjectId(userId) }
     }
+    const followers = await Follower.aggregate([
+        { $match: statusObj[status] },
+        {
+            $lookup: {
+                from: 'users',
+                localField: `${status}Id`,
+                foreignField: '_id',
+                as: 'user'
+            }
+        },
+        { $unwind: "$user" },
+        {
+            $match: search ? { 'user.fullName': { $regex: `.*${search}.*`, $options: 'i' } } : {}
+        },
+        {
+            $project: {
+                user: { _id: 1, fullName: 1, email: 1, userImage: 1 },
+                createdAt: 1,
+                updatedAt: 1,
+            }
+        },
+        { $skip: skip },
+        { $limit: limit }
+    ])
+    return followers;
 
-    const followers = await Follower
-        .find(statusObj[status])
-        .populate({
-            path: status + "Id",
-            match: search ? { 'fullName': { $regex: `.*${search}.*`, $options: 'i' } } : {},
-            select: 'fullName email userImage'
-        })
-        .skip(skip)
-        .limit(limit)
-        .exec();
-
-    // Filter out documents where the populated field is null
-    const filteredFollowers = followers.filter(follower => follower[`${status}Id`] !== null);
-
-    return filteredFollowers;
 
 }
 export default getFollowerQuery
