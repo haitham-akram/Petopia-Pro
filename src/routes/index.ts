@@ -3,11 +3,12 @@ import authRouter from "./auth";
 import petRouter from "./pet";
 import petTypeRouter from "./petType";
 import followerRouter from "./follower";
-import PostsRouter from "./User/posts";
-import CommentsRouter from "./User/comments";
-import LikeRouter from "./User/likes";
+import PostsRouter from "./user/posts";
+import CommentsRouter from "./user/comments";
+import LikeRouter from "./user/likes";
 import BookmarkRouter from "./bookmark";
 import CategoryRouter from "./category";
+import ProductRouter from "./user/products";
 
 const router = express.Router();
 
@@ -20,4 +21,5 @@ router.use("/comments", CommentsRouter);
 router.use("/likes", LikeRouter);
 router.use("/bookmark", BookmarkRouter);
 router.use("/categories", CategoryRouter);
+router.use("/products", ProductRouter);
 export default router;

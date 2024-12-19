@@ -2,7 +2,7 @@ import Category from "../../database/schemas/categorySchema";
 // Add new Category query
 
 interface INewCategory {
-  _id: number;
+  categoryId: number;
   title: string;
 }
 
