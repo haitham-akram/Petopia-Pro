@@ -6,7 +6,9 @@ import followerRouter from "./follower";
 import PostsRouter from "./user/posts";
 import CommentsRouter from "./user/comments";
 import LikeRouter from "./user/likes";
-import BookmarkRouter from './bookmark'
+import BookmarkRouter from "./bookmark";
+import CategoryRouter from "./category";
+import ProductRouter from "./user/products";
 
 const router = express.Router();
 
@@ -17,5 +19,8 @@ router.use("/follower", followerRouter);
 router.use("/posts", PostsRouter);
 router.use("/comments", CommentsRouter);
 router.use("/likes", LikeRouter);
-router.use('/bookmark', BookmarkRouter)
-export default router
+router.use("/bookmark", BookmarkRouter);
+router.use("/categories", CategoryRouter);
+router.use("/products", ProductRouter);
+
+export default router;
