@@ -22,4 +22,5 @@ router.use("/likes", LikeRouter);
 router.use("/bookmark", BookmarkRouter);
 router.use("/categories", CategoryRouter);
 router.use("/products", ProductRouter);
+
 export default router;
