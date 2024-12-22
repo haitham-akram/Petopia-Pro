@@ -5,8 +5,8 @@ import {
   updatePostController,
   callPostsController,
   deletePostsByIDController,
-} from "../../../controllers/posts";
-import authenticate, { userTypes } from "../../../middlewares/auth";
+} from "../../controllers/posts";
+import authenticate, { userTypes } from "../../middlewares/auth";
 const { ADMIN, REGULAR } = userTypes;
 
 const PostsRouter = Router();
