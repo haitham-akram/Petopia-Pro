@@ -1,6 +1,7 @@
 import { type Response, type NextFunction } from "express";
 import { type CustomRequest } from "../../interfaces/iUser";
 import { updateLike } from "../../queries/likes";
+import { sendNotificationToUserChannel } from "../../socket/events";
 
 async function addNewLikeController(
   req: CustomRequest,
@@ -9,10 +10,19 @@ async function addNewLikeController(
 ) {
   try {
     const userId = req.user!.id as string;
+    const userEmail = req.user!.email as string;
     const relateId = req.params.relateId as string;
     const isComment = Object.keys(req.query).includes("comment");
 
-    await updateLike({ userId, relateId, isComment });
+    await updateLike({ userId, relateId, isComment }).then((likeAdded) => {
+      if (likeAdded) {
+        sendNotificationToUserChannel({
+          actorName: userEmail,
+          roomId: userId,
+          messageType: 2,
+        });
+      }
+    });
 
     res.status(201).json({
       message: "Like have been added.",

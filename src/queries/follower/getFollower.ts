@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import Follower from "../../database/schemas/followerSchema";
 
-const getFollowerQuery = async (userId: string, status: 'follower' | 'following', search: string, page: number = 1, limit: number = 10) => {
+const getFollowerQuery = async (userId: string, status: 'follower' | 'following', search: string, page: number = 0, limit: number = 10) => {
 
     const skip = (page) * limit;
 

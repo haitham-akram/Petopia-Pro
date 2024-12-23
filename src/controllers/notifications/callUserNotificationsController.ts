@@ -2,7 +2,11 @@ import { type Response, type NextFunction } from "express";
 import { type CustomRequest } from "../../interfaces/iUser";
 import { callUserNotifications } from "../../queries/notification";
 
-async function template(req: CustomRequest, res: Response, next: NextFunction) {
+async function callUserNotificationsController(
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) {
   try {
     const userId = req.user?.id as string;
 
@@ -26,4 +30,4 @@ async function template(req: CustomRequest, res: Response, next: NextFunction) {
   next();
 }
 
-export default template;
+export default callUserNotificationsController;

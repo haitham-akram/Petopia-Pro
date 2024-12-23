@@ -1,9 +1,7 @@
 import mongoose, { Schema } from "mongoose";
-import User from "./userSchema";
-import { NextFunction } from "express";
-import IPost from "../../interfaces/PostDataInterface";
 import Comment from "./commentSchema";
-import { bookmark } from "../../controllers/bookmark";
+import { getFollowerQuery } from "../../queries/follower";
+import Notification from "./notficationSchema";
 
 // Define the Post schema
 const postSchema = new Schema(
@@ -56,6 +54,38 @@ const postSchema = new Schema(
     timestamps: true, // Automatically handle createdAt and updatedAt
   }
 );
+
+postSchema.post("save", async function (doc, next) {
+  try {
+    // console.log(doc);
+    // const { userId, _id: postId } = doc;
+
+    // const allFollwers = await getFollowerQuery(
+    //   userId.toString(),
+    //   "follower",
+    //   ""
+    // );
+
+    // const followersNotify = allFollwers.map(({ _id }) => {
+    //   return {
+    //     userId: _id.toString(),
+    //     actorId: userId.toString(),
+    //     type: 0,
+    //     data: { postId },
+    //   };
+    // });
+
+    // console.log(sendNotify("post created", userId.toString()));
+
+    // await Notification.insertMany(followersNotify);
+
+    // console.log(followersNotify);
+
+    next();
+  } catch (err) {
+    next();
+  }
+});
 
 postSchema.post("findOneAndDelete", async function (doc, next) {
   try {

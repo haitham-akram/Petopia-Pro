@@ -4,6 +4,7 @@ import INewComment from "../../interfaces/NewCommentInterface";
 import CustomError from "../../helpers/CustomError";
 import commentDataValidator from "../../validation/comment/commentDataValidation";
 import { addNewComment } from "../../queries/comment";
+import { sendNotificationToUserChannel } from "../../socket/events";
 
 async function addNewCommentController(
   req: CustomRequest,
@@ -13,6 +14,7 @@ async function addNewCommentController(
   try {
     const postId = req.params.postId;
     const userId = req?.user?.id!;
+    const actorName = req?.user?.fullName!;
     const commentData = req.body.commentData;
 
     if (!userId) throw new CustomError(404, "You don't have an account.");
@@ -30,6 +32,13 @@ async function addNewCommentController(
     );
 
     if (!addedComment) new CustomError(400, "Somthing went wrong.");
+
+
+    sendNotificationToUserChannel({
+      actorName,
+      roomId: userId,
+      messageType: 1,
+    });
 
     res.status(201).json({
       message: "Comment added successfully",

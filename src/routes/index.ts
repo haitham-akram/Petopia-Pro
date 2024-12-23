@@ -8,7 +8,8 @@ import CommentsRouter from "./user/comments";
 import LikeRouter from "./user/likes";
 import BookmarkRouter from "./bookmark";
 import CategoryRouter from "./category";
-import ProductRouter from "./user/products";
+import ProductRouter from "./User/products";
+import NotificationRouter from "./notification";
 
 const router = express.Router();
 
@@ -22,5 +23,6 @@ router.use("/likes", LikeRouter);
 router.use("/bookmark", BookmarkRouter);
 router.use("/categories", CategoryRouter);
 router.use("/products", ProductRouter);
+router.use("/notifications", NotificationRouter);
 
 export default router;
