@@ -4,7 +4,9 @@ import PostDataValidator from "../../validation/post/postDataValidator";
 import PostAttachedData from "../../helpers/postAttachedData";
 import { type CustomRequest } from "../../interfaces/iUser";
 import INewPost from "../../interfaces/NewPostInterface";
-import { sendNotificationToUserChannel } from "../../socket/events";
+// import { sendNotificationToUserChannel } from "../../socket/events";
+import { sendNewPostNotif } from "../../socket/notificationSends";
+// import { addNewConnection } from "../../queries/connections";
 
 // All Done and Tested ✅
 async function AddNewPostController(
@@ -31,13 +33,12 @@ async function AddNewPostController(
       AttachedData
     );
 
-    NewPost = await addNewPost(ReadyPostData);
+    NewPost = await addNewPost(ReadyPostData).then(async (data) => {
+      // LOOK Here
+      await sendNewPostNotif(actorName, userId, data.postContent)
+      // ^^^^^^^^^^^^^^^^^
 
-    console.log(actorName);
-
-    sendNotificationToUserChannel({
-      actorName,
-      roomId: userId,
+      return data
     });
 
     res.status(201).json({

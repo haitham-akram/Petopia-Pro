@@ -1,5 +1,6 @@
 import eventsTypes from "./eventsTypes";
 
+// connect to new room
 function userConnecingEvent(s: any) {
   s.on(eventsTypes.JOIN_ROOM[0], (userId: string) => {
     s.join(userId);
@@ -7,6 +8,7 @@ function userConnecingEvent(s: any) {
   });
 }
 
+// send though the room
 function userSendingEvent(s: any) {
   console.log(`A user connected: ${s.id}`);
   s.on(eventsTypes.SEND_MESSAGE[0], (message: string) => {
@@ -17,6 +19,7 @@ function userSendingEvent(s: any) {
   });
 }
 
+// send though the private room
 function userPrivateSendingEvent(s: any, io: any) {
   s.on(
     eventsTypes.SEND_PRIVATE_MESSAGE[0],
@@ -27,12 +30,14 @@ function userPrivateSendingEvent(s: any, io: any) {
   );
 }
 
+// disconnect from the room
 function userDisconnectingEvent(s: any) {
   s.on(eventsTypes.LEAVE_ROOM, () => {
     console.log(`User disconnected: ${s.id}`);
   });
 }
 
+// call all the event on one place to export it to the config file
 function socketConnection(s: any, io: any) {
   userSendingEvent(s);
   userConnecingEvent(s);

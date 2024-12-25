@@ -4,7 +4,7 @@ import INewComment from "../../interfaces/NewCommentInterface";
 import CustomError from "../../helpers/CustomError";
 import commentDataValidator from "../../validation/comment/commentDataValidation";
 import { addNewComment } from "../../queries/comment";
-import { sendNotificationToUserChannel } from "../../socket/events";
+import { sendNewCommentNotif } from "../../socket/notificationSends";
 
 async function addNewCommentController(
   req: CustomRequest,
@@ -29,16 +29,13 @@ async function addNewCommentController(
 
     const addedComment = await addNewComment(
       validatedCommentData as unknown as INewComment
-    );
+    ).then(async data => {
+      if (!data) new CustomError(400, "Somthing went wrong.");
 
-    if (!addedComment) new CustomError(400, "Somthing went wrong.");
-
-
-    sendNotificationToUserChannel({
-      actorName,
-      roomId: userId,
-      messageType: 1,
+      await sendNewCommentNotif(actorName, userId, data.commentText)
+      return data
     });
+
 
     res.status(201).json({
       message: "Comment added successfully",

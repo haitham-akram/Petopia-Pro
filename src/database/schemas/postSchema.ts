@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import Comment from "./commentSchema";
-import { getFollowerQuery } from "../../queries/follower";
-import Notification from "./notficationSchema";
+// import { getFollowerQuery } from "../../queries/follower";
+// import Notification from "./notficationSchema";
 
 // Define the Post schema
 const postSchema = new Schema(
@@ -55,7 +55,7 @@ const postSchema = new Schema(
   }
 );
 
-postSchema.post("save", async function (doc, next) {
+postSchema.post("save", async function (__doc, next) {
   try {
     // console.log(doc);
     // const { userId, _id: postId } = doc;

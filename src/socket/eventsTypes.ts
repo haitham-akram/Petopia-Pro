@@ -1,3 +1,5 @@
+
+// emits types for config file
 export default {
   JOIN_ROOM: ["joinRoom"],
   SEND_MESSAGE: ["sendMessage"],

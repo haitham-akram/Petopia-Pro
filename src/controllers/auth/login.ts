@@ -4,6 +4,7 @@ import { validateLogin } from "../../validation/auth";
 import bcrypt from "bcrypt";
 import CustomError from "../../helpers/CustomError";
 import { generateToken } from "../../helpers/authToken";
+import { connectUserRooms } from "../../queries/connections";
 
 const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -34,6 +35,8 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
           fullName,
         };
         const token = await generateToken(payload);
+        // const connectios = await connectUserRooms(id as string)
+        // console.log(connectios)
         res
           .cookie("token", token, { httpOnly: true })
           .json({ message: "Logged in successfully" });

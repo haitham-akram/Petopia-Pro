@@ -10,16 +10,16 @@ async function addNewLikeController(
 ) {
   try {
     const userId = req.user!.id as string;
-    const userEmail = req.user!.email as string;
+    const actorName = req.user!.fullName as string;
     const relateId = req.params.relateId as string;
     const isComment = Object.keys(req.query).includes("comment");
 
     await updateLike({ userId, relateId, isComment }).then((likeAdded) => {
       if (likeAdded) {
         sendNotificationToUserChannel({
-          actorName: userEmail,
-          roomId: userId,
-          messageType: 2,
+          actorName,
+          roomId: likeAdded.relateId.toString(),
+          messageType: "new-like",
         });
       }
     });
