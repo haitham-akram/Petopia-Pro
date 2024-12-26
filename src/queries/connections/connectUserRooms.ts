@@ -1,10 +1,11 @@
 import { Types } from "mongoose";
 import Connection from "../../database/schemas/connectionSchema";
+import UserConnectRooms from "../../database/schemas/userConnectRoomsSchema";
 
 async function connectUserRooms(
     userId: Types.ObjectId | string,
 ) {
-    return (await Connection.findOne({ userId }).select(" -privateRoom -publicRoom rooms"))!.rooms.push(userId.toString());
+    return (await UserConnectRooms.findOne({ userId }).select("-_id rooms"))!.rooms;
 }
 
 export default connectUserRooms;

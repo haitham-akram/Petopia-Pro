@@ -1,6 +1,6 @@
 import mongoose, { Schema, Types } from "mongoose";
 
-const connectionSchema = new Schema(
+const userConnectRoomsSchema = new Schema(
   {
     // the user that have the connection info
     userId: {
@@ -34,6 +34,6 @@ const connectionSchema = new Schema(
   }
 );
 
-const Connection = mongoose.model("Connection", connectionSchema);
+const UserConnectRooms = mongoose.model("UserConnectRooms", userConnectRoomsSchema);
 
-export default Connection;
+export default UserConnectRooms;

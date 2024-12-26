@@ -20,6 +20,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
         status,
         verified,
       } = user;
+
       if (status === "inactive") {
         throw new CustomError(400, "Account is Inactive");
       }
@@ -35,11 +36,11 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
           fullName,
         };
         const token = await generateToken(payload);
-        // const connectios = await connectUserRooms(id as string)
-        // console.log(connectios)
+        const connectios = await connectUserRooms(id as string)
+
         res
           .cookie("token", token, { httpOnly: true })
-          .json({ message: "Logged in successfully" });
+          .json({ message: "Logged in successfully", connectios });
       } else {
         throw new CustomError(400, "Wrong Password");
       }

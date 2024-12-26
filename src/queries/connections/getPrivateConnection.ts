@@ -1,10 +1,10 @@
 import { Types } from "mongoose";
-import Connection from "../../database/schemas/connectionSchema";
+import UserConnectRooms from "../../database/schemas/userConnectRoomsSchema";
 
 async function getPrivateConnection(
     userId: Types.ObjectId | string,
 ) {
-    const privateRoom = (await Connection.findOne({ userId }))?.privateRoom
+    const privateRoom = (await UserConnectRooms.findOne({ userId }).select("-_id privateRoom"))?.privateRoom
     return privateRoom
 }
 
