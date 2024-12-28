@@ -14,8 +14,11 @@ const userSchema = new Schema(
       unique: true, // Ensure email is unique
     },
     password: {
-      type: String, // The user's password
-      required: true,
+      type: String, // Make password optional for Google OAuth users
+    },
+    googleId: {
+      type: String, // Store Google ID for OAuth users
+      unique: true, // Ensure no duplicate Google IDs
     },
     userImage: {
       type: String, // URL or path to the user's image

@@ -1,8 +1,8 @@
-import { type Request } from 'express'
+import { Request } from 'express'
 interface UserType {
     fullName: string;
     email: string;
-    password: string;
+    password?: string;
     userImage?: string;
     profileImage?: string;
     address?: string;
@@ -12,6 +12,7 @@ interface UserType {
     verified: boolean,
     followerCount: number;
     followingCount: number;
+    googleId?: string;
 }
 interface UpdatedData {
     fullName?: string,

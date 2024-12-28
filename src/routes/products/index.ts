@@ -1,5 +1,5 @@
 import { Router } from "express";
-import authenticate, { userTypes } from "../../../middlewares/auth";
+import authenticate, { userTypes } from "../../middlewares/auth";
 import {
   addNewProductController,
   callAllProductsController,
@@ -7,7 +7,7 @@ import {
   callUserProductsController,
   deleteOneProductByIdController,
   updateOldProductController,
-} from "../../../controllers/products";
+} from "../../controllers/products";
 const { ADMIN, REGULAR } = userTypes;
 
 const ProductRouter = Router();

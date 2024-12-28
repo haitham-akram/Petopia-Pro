@@ -17,7 +17,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
             if (!verified) {
                 throw new CustomError(400, 'verify your account first!')
             }
-            const isPasswordTrue = await bcrypt.compare(password, hashedPassword)
+            const isPasswordTrue = await bcrypt.compare(password, hashedPassword as string)
             if (isPasswordTrue) {
                 const payload = {
                     id, isAdmin, email
