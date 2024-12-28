@@ -56,7 +56,6 @@ const postSchema = new Schema(
 
 postSchema.post("findOneAndDelete", async function (doc, next) {
   try {
-    console.log(doc);
     await Comment.deleteMany({ postId: doc._id });
     next();
   } catch (err) {

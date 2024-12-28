@@ -4,7 +4,7 @@ import { unFollowUserQuery } from "../../queries/follower";
 import CustomError from "../../helpers/CustomError";
 
 const unfollowUser = async (req: CustomRequest, res: Response, next: NextFunction) => {
-    const followerId = req.user?.id as string;
+    const followerId = req.userInfo?.id as string;
     const { followingId } = req.body ;
     try {
         if (followerId === followingId) {

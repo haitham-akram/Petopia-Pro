@@ -10,8 +10,8 @@ async function deletePostsByIDController(
   next: NextFunction
 ) {
   try {
-    const userId = req?.user?.id as string;
-    const userEmail = req?.user?.email;
+    const userId = req?.userInfo?.id as string;
+    const userEmail = req?.userInfo?.email;
     const postId = req.params.postId as string;
 
     if (!userId || !postId) {

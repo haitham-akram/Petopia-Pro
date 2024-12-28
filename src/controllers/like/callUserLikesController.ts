@@ -8,7 +8,7 @@ async function callUserLikesController(
   next: NextFunction
 ) {
   try {
-    const userId = req.user?.id as string;
+    const userId = req.userInfo?.id as string;
     const { index, limit } = req.query;
 
     const likes = await callUserLikes(userId, index as string, limit as string);

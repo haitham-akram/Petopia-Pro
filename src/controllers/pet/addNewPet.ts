@@ -5,7 +5,7 @@ import addNewPetQuery from "../../queries/pet/addNewPetQuery";
 import { type CustomRequest } from "../../interfaces/iUser";
 
 const addNewPet = async (req: CustomRequest, res: Response, next: NextFunction) => {
-    const petData = { ...req.body, ownerId: req.user?.id };
+    const petData = { ...req.body, ownerId: req.userInfo?.id };
     try {
         const {
             ownerId,

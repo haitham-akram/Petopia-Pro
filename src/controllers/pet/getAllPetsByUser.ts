@@ -3,7 +3,7 @@ import { type CustomRequest } from "../../interfaces/iUser";
 import { getPetsByUserIdQuery } from "../../queries/pet";
 
 const getAllPetsByUser = async (req: CustomRequest, res: Response, next: NextFunction) => {
-    const userId = req.user?.id as string;
+    const userId = req.userInfo?.id as string;
     const { search, page, limit } = req.query
     const pageNum = Number(page) >= 0 ? Number(page) : 0
     const limitNum = Number(limit) >= 0 ? Number(limit) : 0

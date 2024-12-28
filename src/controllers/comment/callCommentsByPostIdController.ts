@@ -18,8 +18,6 @@ async function callCommentsByPostIdController(
       count as string
     )) as [];
 
-    console.log(comments);
-
     if (!comments.length) new CustomError(404, "There is no comments yet.");
 
     res.status(200).json({

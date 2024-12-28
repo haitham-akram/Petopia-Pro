@@ -8,7 +8,7 @@ async function addNewLikeController(
   next: NextFunction
 ) {
   try {
-    const userId = req.user!.id as string;
+    const userId = req.userInfo!.id as string;
     const relateId = req.params.relateId as string;
     const isComment = Object.keys(req.query).includes("comment");
 

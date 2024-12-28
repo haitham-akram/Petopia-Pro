@@ -9,7 +9,7 @@ interface UserReq {
 }
 const manageStatus = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
-        const loggedUserId = req.user?.id
+        const loggedUserId = req.userInfo?.id
         const { userId, status } = req.body as UserReq;
         if (loggedUserId === userId) throw new CustomError(400, "you can't update your active status !")
         const updatedUserStatus = await manageStatusQuery(userId, status)

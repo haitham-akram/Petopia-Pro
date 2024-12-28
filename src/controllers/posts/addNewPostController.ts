@@ -14,7 +14,7 @@ async function AddNewPostController(
   try {
     const { PostData }: { PostData: INewPost } = req.body;
 
-    PostData.userId = req.user?.id.toString()!;
+    PostData.userId = req.userInfo?.id.toString()!;
 
     const validatedPostData = await PostDataValidator(PostData);
     let NewPost;
@@ -23,7 +23,7 @@ async function AddNewPostController(
       ProductData: {},
     };
 
-    
+
     const { ReadyPostData, ReadyAttachedData } = await PostAttachedData(
       validatedPostData,
       PostData,
