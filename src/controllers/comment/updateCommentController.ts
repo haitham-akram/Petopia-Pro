@@ -9,7 +9,7 @@ async function updateCommentController(
   next: NextFunction
 ) {
   try {
-    const userId = req.user!.id;
+    const userId = req.userInfo!.id;
     const { commentId } = req.params;
     const { newCommentData } = req.body;
 

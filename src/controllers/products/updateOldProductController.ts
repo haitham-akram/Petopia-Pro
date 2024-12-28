@@ -12,7 +12,7 @@ async function updateOldProductController(
 ) {
   try {
     const productId = req.params.productId as string;
-    const userId = req.user!.id as string;
+    const userId = req.userInfo!.id as string;
     const { productData } = req.body as { productData: IUpdateProdcut };
 
     const validatedUpdateProdductData = await updateProductDataValidator(

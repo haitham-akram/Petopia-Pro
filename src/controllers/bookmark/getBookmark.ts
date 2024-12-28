@@ -4,7 +4,7 @@ import { getBookmarksQuery } from '../../queries/bookmark'
 
 const getBookmarks = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
-        const userId = req.user?.id as string
+        const userId = req.userInfo?.id as string
         const { page, limit } = req.query
         const numberPage = Number(page) >= 0 ? Number(page) : 0
         const numberLimit = Number(limit) >= 0 ? Number(limit) : 10

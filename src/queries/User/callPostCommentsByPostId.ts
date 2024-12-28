@@ -8,7 +8,6 @@ const callPostCommentsByPostId = async ({ UserId }: { UserId: string }) => {
   } catch (error) {
     result = error;
   }
-  console.log("User called:", result);
   return result;
 };
 

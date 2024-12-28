@@ -31,13 +31,13 @@ passport.use(
                         followingCount: 0,
                     });
                 }
-                console.log("User", user);
+               
                 const token = await generateToken({
                     id: user.id,
                     email: user.email,
                     isAdmin: user.isAdmin,
                 });
-                console.log("Token", token);
+            
                 // Attach token and user to the done callback
                 done(null, { token });
             } catch (error) {

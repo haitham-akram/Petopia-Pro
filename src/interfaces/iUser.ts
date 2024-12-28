@@ -38,7 +38,7 @@ interface UserPayload {
 
 
 interface CustomRequest extends Request {
-    user?: UserPayload
+    userInfo?: UserPayload
 }
 
 

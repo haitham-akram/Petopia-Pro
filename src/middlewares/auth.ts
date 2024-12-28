@@ -16,12 +16,12 @@ const authenticate = (authorizedTypes: userTypes[]) => async (req: CustomRequest
     if (token) {
         try {
             const authenticatedUser = await verifyToken(token) as UserPayload;
-            req.user = authenticatedUser;
+            req.userInfo = authenticatedUser;
 
             if (authenticatedUser === null) {
                 next(new CustomError(404, 'User Not Found'));
             } else {
-                const isAdmin = req.user?.isAdmin;
+                const isAdmin = req.userInfo?.isAdmin;
                 if (isAdmin === undefined) {
                     next(new CustomError(400, 'User is missing admin status'));
                 } else if (authorizedTypes.includes(Number(isAdmin) as Number as userTypes)) {
