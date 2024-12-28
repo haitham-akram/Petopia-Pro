@@ -3,8 +3,8 @@ import {
   callAllLikeController,
   callUserLikesController,
   updateikeController,
-} from "../../../controllers/like";
-import authenticate, { userTypes } from "../../../middlewares/auth";
+} from "../../controllers/like";
+import authenticate, { userTypes } from "../../middlewares/auth";
 const { ADMIN, REGULAR } = userTypes;
 
 const likeRouter = Router();

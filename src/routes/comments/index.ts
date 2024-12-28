@@ -1,12 +1,12 @@
 import { Router } from "express";
 
-import authenticate, { userTypes } from "../../../middlewares/auth";
+import authenticate, { userTypes } from "../../middlewares/auth";
 import {
   callCommentsByPostIdController,
   addNewCommentController,
   deleteCommentController,
   updateCommentController,
-} from "../../../controllers/comment";
+} from "../../controllers/comment";
 const { ADMIN, REGULAR } = userTypes;
 
 const CommentsRouter = Router();
