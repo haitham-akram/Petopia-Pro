@@ -1,6 +1,11 @@
 import mongoose, { Schema } from "mongoose";
 import Comment from "./commentSchema";
+<<<<<<< HEAD
+// import { getFollowerQuery } from "../../queries/follower";
+// import Notification from "./notficationSchema";
+=======
 
+>>>>>>> 44c73207e9fcd73cdc9601ff105717af1850330e
 
 // Define the Post schema
 const postSchema = new Schema(
@@ -53,6 +58,38 @@ const postSchema = new Schema(
     timestamps: true, // Automatically handle createdAt and updatedAt
   }
 );
+
+postSchema.post("save", async function (__doc, next) {
+  try {
+    // console.log(doc);
+    // const { userId, _id: postId } = doc;
+
+    // const allFollwers = await getFollowerQuery(
+    //   userId.toString(),
+    //   "follower",
+    //   ""
+    // );
+
+    // const followersNotify = allFollwers.map(({ _id }) => {
+    //   return {
+    //     userId: _id.toString(),
+    //     actorId: userId.toString(),
+    //     type: 0,
+    //     data: { postId },
+    //   };
+    // });
+
+    // console.log(sendNotify("post created", userId.toString()));
+
+    // await Notification.insertMany(followersNotify);
+
+    // console.log(followersNotify);
+
+    next();
+  } catch (err) {
+    next();
+  }
+});
 
 postSchema.post("findOneAndDelete", async function (doc, next) {
   try {

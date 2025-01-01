@@ -1,4 +1,6 @@
 import mongoose, { Schema } from "mongoose";
+import { sendMessageEvent } from "../../socket/events";
+import CustomError from "../../helpers/CustomError";
 
 // Define the Messages schema
 const messagesSchema = new Schema(
@@ -8,19 +10,23 @@ const messagesSchema = new Schema(
       ref: "User",
       require: true,
     },
-    resiverId: {
+    reciverId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       require: true,
     },
-    postId:{
+    messageRoom: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Post",
+      ref: "MessagesRoom",
       require: true,
     },
-    content:{
+    content: {
       type: String,
-      require: true, 
+      require: true,
+    },
+    attachedId: {
+      type: mongoose.Schema.Types.ObjectId,
+      default: ""
     },
   },
   {
@@ -28,7 +34,20 @@ const messagesSchema = new Schema(
   }
 );
 
-// Create the Messages model from the schema
-const Messages = mongoose.model("Messages", messagesSchema);
+messagesSchema.pre("save", async function (next) {
+  try {
+    const messageSentCheck = await sendMessageEvent(this.senderId!.toString(), this.reciverId!.toString(), "Hello", this.attachedId)
 
-export default Messages;
+    if (!messageSentCheck) next(new CustomError(404, "somthing went wrong"))
+
+    next()
+  } catch (err) {
+    throw new CustomError(404, "somthing went wrong")
+  }
+  next()
+})
+
+// Create the Messages model from the schema
+const Message = mongoose.model("Message", messagesSchema);
+
+export default Message;

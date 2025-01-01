@@ -4,6 +4,8 @@ import { config } from "dotenv";
 import { getUserByEmail } from "../../queries/User";
 import addUser from "../../helpers/addUser";
 import { generateToken } from "../../helpers/authToken";
+import { connectUserRooms } from "../../queries/connections";
+import CustomError from "../../helpers/CustomError";
 config();
 
 passport.use(
@@ -31,15 +33,20 @@ passport.use(
                         followingCount: 0,
                     });
                 }
-               
+
+                if (user.status === 'inactive') {
+                    throw new CustomError(400, 'Account is Inactive')
+                }
+
                 const token = await generateToken({
                     id: user.id,
                     email: user.email,
                     isAdmin: user.isAdmin,
                 });
-            
+                const connectios = await connectUserRooms(user.id)
+
                 // Attach token and user to the done callback
-                done(null, { token });
+                done(null, { token, connectios });
             } catch (error) {
                 console.error("Error during Google OAuth:", error);
                 done(error); // Pass error to the next middleware

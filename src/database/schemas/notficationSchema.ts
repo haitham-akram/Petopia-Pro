@@ -1,29 +1,32 @@
 import mongoose, { Schema } from "mongoose";
 
-// Define the Notfication schema
-const notficationSchema = new Schema(
+const notificationSchema = new Schema(
   {
-    resiverId: {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      require: true,
+      required: true,
     },
-    postId:{
+    actorId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Post",
-      require: true,
+      ref: "User",
     },
-    content:{
-      type: String,
-      require: true, 
+    type: {
+      type: Number,
+      required: true,
+      enum:[0,1,2,3]
+    }, // Notification type: "like", "comment", etc.
+    data: { type: Object },
+    isRead: {
+      type: Boolean,
+      default: false,
     },
   },
   {
-    timestamps: true, // Automatically handle createdAt and updatedAt
+    timestamps: true,
   }
 );
 
-// Create the Notfication model from the schema
-const Notfication = mongoose.model("Notfication", notficationSchema);
+const Notification = mongoose.model("Notification", notificationSchema);
 
-export default Notfication;
+export default Notification;
