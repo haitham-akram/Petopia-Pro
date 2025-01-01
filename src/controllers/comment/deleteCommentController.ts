@@ -5,7 +5,7 @@ import CustomError from "../../helpers/CustomError";
 
 async function deleteCommentController(req: CustomRequest, res: Response, next: NextFunction) {
   try {
-    const userId = req.user!.id;
+    const userId = req.userInfo!.id;
     const { commentId } = req.params;
 
     const deletedCommentData = await deleteComment(commentId, userId);

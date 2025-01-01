@@ -6,8 +6,8 @@ import { getPublicConnection, removeConnection } from "../../queries/connections
 import { deleteMR, getOneMR } from "../../queries/messagesRoom";
 
 const unfollowUser = async (req: CustomRequest, res: Response, next: NextFunction) => {
-    const followerId = req.user?.id as string;
-    const { followingId } = req.body;
+    const followerId = req.userInfo?.id as string;
+    const { followingId } = req.body ;
     try {
         if (followerId === followingId) {
             throw new CustomError(400, "You can't unfollow yourself.")

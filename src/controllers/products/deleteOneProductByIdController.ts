@@ -10,12 +10,12 @@ async function deleteOneProductByIdController(
 ) {
   try {
     const productId = req.params.productId as string;
-    const userId = req.user!.id as string;
+    const userId = req.userInfo!.id as string;
 
     const deletedProduct = await deleteOneProductById(productId, userId);
 
     if (!deletedProduct)
-     throw new CustomError(404, "The product does not exists.");
+      throw new CustomError(404, "The product does not exists.");
 
     res.status(200).json({
       message: "The product have been updated.",

@@ -21,7 +21,7 @@ async function updatePostController(
     // collect data
     const NewPostData = req.body.NewPostData as IUpdatePost;
     const postId = req.params.postId as string;
-    const userId = req.user?.id;
+    const userId = req.userInfo?.id;
 
     // validate data
     const validatedUpdatedData = await PostUpdateDataValidator(NewPostData);

@@ -17,17 +17,22 @@ const addUser = async (data: UserType) => {
         status,
         verified,
         followerCount,
-        followingCount
+        followingCount,
+        googleId
     }: UserType = await validateSignup({
         ...(data), status: 'active'
     })
     const isAdminEmailFound = Boolean(await getAdminEmailQuery(email));
+    let hashedPassword;
+    if (password) {
+        hashedPassword = await bcrypt.hash(password, 10)
+    }
 
-    const hashedPassword = await bcrypt.hash(password, 10)
     const newUser = await signupQuery({
         fullName,
         email,
-        password: hashedPassword,
+        password: googleId ? undefined : hashedPassword,
+        googleId,
         address,
         phone,
         userImage,

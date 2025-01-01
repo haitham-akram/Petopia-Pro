@@ -1,7 +1,11 @@
 import mongoose, { Schema } from "mongoose";
 import Comment from "./commentSchema";
+<<<<<<< HEAD
 // import { getFollowerQuery } from "../../queries/follower";
 // import Notification from "./notficationSchema";
+=======
+
+>>>>>>> 44c73207e9fcd73cdc9601ff105717af1850330e
 
 // Define the Post schema
 const postSchema = new Schema(
@@ -89,7 +93,6 @@ postSchema.post("save", async function (__doc, next) {
 
 postSchema.post("findOneAndDelete", async function (doc, next) {
   try {
-    console.log(doc);
     await Comment.deleteMany({ postId: doc._id });
     next();
   } catch (err) {

@@ -8,39 +8,28 @@ import { connectUserRooms } from "../../queries/connections";
 
 const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { email, password } = await validateLogin(req.body);
-    const user = await loginQuery({ email });
+    const { email, password } = await validateLogin(req.body)
+    const user = await loginQuery({ email })
     if (user != null) {
-      const {
-        id,
-        isAdmin,
-        email,
-        fullName,
-        password: hashedPassword,
-        status,
-        verified,
-      } = user;
-
-      if (status === "inactive") {
-        throw new CustomError(400, "Account is Inactive");
+      const { id, isAdmin, email, password: hashedPassword, status, verified } = user
+      if (status === 'inactive') {
+        throw new CustomError(400, 'Account is Inactive')
       }
       if (!verified) {
-        throw new CustomError(400, "verify your account first!");
+        throw new CustomError(400, 'verify your account first!')
       }
-      const isPasswordTrue = await bcrypt.compare(password, hashedPassword);
+      const isPasswordTrue = await bcrypt.compare(password, hashedPassword as string)
       if (isPasswordTrue) {
         const payload = {
-          id,
-          isAdmin,
-          email,
-          fullName,
-        };
-        const token = await generateToken(payload);
+          id, isAdmin, email
+        }
+        const token = await generateToken(payload)
         const connectios = await connectUserRooms(id as string)
 
         res
           .cookie("token", token, { httpOnly: true })
           .json({ message: "Logged in successfully", connectios });
+
       } else {
         throw new CustomError(400, "Wrong Password");
       }

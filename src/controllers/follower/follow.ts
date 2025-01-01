@@ -8,14 +8,14 @@ import { createNewMR } from "../../queries/messagesRoom";
 
 const followUser = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
-        const userId = req.user?.id;
+        const userId = req.userInfo?.id;
 
         const { followerId, followingId } = await validateFollow({ ...req.body, followerId: userId });
         if (followerId === followingId) {
             throw new CustomError(400, "You can't follow yourself.")
         }
 
-        const actorName = req.user?.fullName
+        const actorName = req.userInfo?.fullName
 
         await followUserQuery(followerId, followingId)
             .then(async __ => {

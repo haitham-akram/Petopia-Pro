@@ -33,7 +33,6 @@ async function callPostsController(
     });
   } catch (err) {
     // Passing the error to the route just in case it happened
-    console.log(err);
     next(err);
   }
 

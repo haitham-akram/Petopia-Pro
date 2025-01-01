@@ -5,8 +5,8 @@ import { validateNewPet } from "../../validation/pet";
 import { updatePetQuery } from "../../queries/pet";
 
 const updatePet = async (req: CustomRequest, res: Response, next: NextFunction) => {
-    const ownerId = req.user?.id as string;
-    const petData = { ...req.body, ownerId: req.user?.id } as IPet;
+    const ownerId = req.userInfo?.id as string;
+    const petData = { ...req.body, ownerId: req.userInfo?.id } as IPet;
     const id = req.params.id
     try {
         const validatedPetData = await validateNewPet(petData as IPet)

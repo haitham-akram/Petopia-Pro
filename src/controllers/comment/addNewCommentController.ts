@@ -13,8 +13,8 @@ async function addNewCommentController(
 ) {
   try {
     const postId = req.params.postId;
-    const userId = req?.user?.id!;
-    const actorName = req?.user?.fullName!;
+    const userId = req?.userInfo?.id!;
+    const actorName = req?.userInfo?.fullName!;
     const commentData = req.body.commentData;
 
     if (!userId) throw new CustomError(404, "You don't have an account.");

@@ -15,8 +15,8 @@ async function AddNewPostController(
   next: NextFunction
 ) {
   try {
-    const userId = req.user!.id;
-    const actorName = req.user!.fullName;
+    const userId = req.userInfo!.id;
+    const actorName = req.userInfo!.fullName;
 
     const PostData = { ...req.body.PostData, userId } as INewPost;
 
@@ -27,6 +27,7 @@ async function AddNewPostController(
       ProductData: {},
     };
 
+
     const { ReadyPostData, ReadyAttachedData } = await PostAttachedData(
       validatedPostData,
       PostData,
@@ -35,7 +36,7 @@ async function AddNewPostController(
 
     NewPost = await addNewPost(ReadyPostData).then(async (data) => {
       // LOOK Here
-      await sendNewPostNotif(actorName, userId, data.postContent)
+      await sendNewPostNotif(actorName as string, userId, data.postContent)
       // ^^^^^^^^^^^^^^^^^
 
       return data

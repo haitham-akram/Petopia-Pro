@@ -11,7 +11,7 @@ async function addNewProductController(
 ) {
   try {
     const { newProductData } = req.body;
-    const userId = req.user!.id;
+    const userId = req.userInfo!.id;
 
     newProductData.userId = userId;
 

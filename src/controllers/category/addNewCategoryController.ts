@@ -5,9 +5,6 @@ import { addNewCategory } from "../../queries/category";
 async function template(req: CustomRequest, res: Response, next: NextFunction) {
   try {
     const { NewCategory } = req.body;
-
-    console.log(NewCategory)
-
     const newCategory = await addNewCategory(NewCategory);
 
     res.status(201).json({

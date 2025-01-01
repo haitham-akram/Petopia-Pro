@@ -18,7 +18,6 @@ async function UpdateAttachedData({
   switch (NewPostData.categoryId) {
     case 1:
     case 2:
-      console.log("31", !NewPostData.petId);
       if (!NewPostData.petId) {
         return {
           status: 200,
