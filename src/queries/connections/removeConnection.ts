@@ -1,15 +1,15 @@
 import { Types } from "mongoose";
 import UserConnectRooms from "../../database/schemas/userConnectRoomsSchema";
 
-async function addNewConnection(
+async function removeConnection(
   userId: Types.ObjectId | string,
-  newRooms?: string[] | string
+  roomId?: string
 ) {
   return await UserConnectRooms.findOneAndUpdate(
     { userId },
-    { $push: { rooms: newRooms || [] } },
+    { $pull: { rooms: roomId } },
     // { upsert: true, }
   );
 }
 
-export default addNewConnection;
+export default removeConnection;

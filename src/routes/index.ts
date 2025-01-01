@@ -10,6 +10,7 @@ import BookmarkRouter from "./bookmark";
 import CategoryRouter from "./category";
 import ProductRouter from "./User/products";
 import NotificationRouter from "./notification";
+import MessageRoutes from "./message";
 
 const router = express.Router();
 
@@ -24,5 +25,6 @@ router.use("/bookmark", BookmarkRouter);
 router.use("/categories", CategoryRouter);
 router.use("/products", ProductRouter);
 router.use("/notifications", NotificationRouter);
+router.use("/messages", MessageRoutes);
 
 export default router;

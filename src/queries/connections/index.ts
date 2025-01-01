@@ -3,6 +3,7 @@ import connectUserRooms from "./connectUserRooms";
 import getPrivateConnection from "./getPrivateConnection";
 import getPublicConnection from "./getPublicConnection";
 import createNewConnection from './createNewConnection'
+import removeConnection from './removeConnection'
 
 export {
     // create new connection for user after verify 
@@ -14,5 +15,7 @@ export {
     // get the private room ID
     getPrivateConnection,
     // get the publci room ID
-    getPublicConnection
+    getPublicConnection,
+    // remove unwanted roomId
+    removeConnection
 };

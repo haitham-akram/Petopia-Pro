@@ -33,7 +33,7 @@ const callOneProductById = async (productId: string) => {
     },
   ]);
 
-  return calledProduct;
+  return calledProduct[0];
 };
 
 export default callOneProductById;

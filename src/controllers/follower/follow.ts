@@ -1,9 +1,10 @@
 import { type Response, type NextFunction } from "express";
-import { followUserQuery } from "../../queries/follower";
+import { checkMutaulity, followUserQuery } from "../../queries/follower";
 import CustomError from "../../helpers/CustomError";
 import { validateFollow } from "../../validation/follow";
 import { type CustomRequest } from "../../interfaces/iUser";
 import { newFollowerNotif } from "../../socket/notificationSends";
+import { createNewMR } from "../../queries/messagesRoom";
 
 const followUser = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
@@ -17,8 +18,12 @@ const followUser = async (req: CustomRequest, res: Response, next: NextFunction)
         const actorName = req.user?.fullName
 
         await followUserQuery(followerId, followingId)
-            .then(__ => newFollowerNotif(actorName as string, userId as string));
-            console.log(actorName)
+            .then(async __ => {
+                const areMutual = await checkMutaulity(followerId, followingId);
+                console.log(areMutual)
+                if (areMutual) console.log(await createNewMR(followerId, followingId))
+                newFollowerNotif(actorName as string, userId as string)
+            });
 
         res.status(200).json({ message: "Followed successfully." });
 

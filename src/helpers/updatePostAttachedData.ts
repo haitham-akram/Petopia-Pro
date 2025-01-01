@@ -54,12 +54,11 @@ async function UpdateAttachedData({
 
       const newProduct = await callOneProductById(NewPostData.productId!);
 
-      if (!newProduct) {
+      if (!newProduct)
         return {
           status: 200,
           message: "The new product are not exist.",
-        };
-      }
+        }
 
       if (newProduct!.userId?.toString() !== PostData.userId.toString()) {
         return {
