@@ -11,6 +11,7 @@ import CategoryRouter from "./category";
 import ProductRouter from "./products";
 import UserRouter from './user'
 import FlagRouter from './flag'
+import StatisticsRouter from './statistics'
 
 const router = express.Router();
 
@@ -26,4 +27,5 @@ router.use("/categories", CategoryRouter);
 router.use("/products", ProductRouter);
 router.use('/admin/user', UserRouter)
 router.use('/flag', FlagRouter)
+router.use('/statistics', StatisticsRouter)
 export default router

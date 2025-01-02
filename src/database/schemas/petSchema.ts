@@ -13,7 +13,7 @@ const petSchema = new Schema(
       required: true,
     },
     type: {
-      type: String, // Numeric value for pet type (e.g., 1 for dog, 2 for cat)
+      type: mongoose.Schema.Types.ObjectId, // Numeric value for pet type (e.g., 1 for dog, 2 for cat)
       ref: "PetType",
       required: true,
     },
