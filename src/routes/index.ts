@@ -8,15 +8,12 @@ import CommentsRouter from "./comments";
 import LikeRouter from "./likes";
 import BookmarkRouter from "./bookmark";
 import CategoryRouter from "./category";
-<<<<<<< HEAD
-import ProductRouter from "./User/products";
 import NotificationRouter from "./notification";
 import MessageRoutes from "./message";
-=======
 import ProductRouter from "./products";
 import UserRouter from './user'
 import FlagRouter from './flag'
->>>>>>> 44c73207e9fcd73cdc9601ff105717af1850330e
+import StatisticsRouter from './statistics'
 
 const router = express.Router();
 
@@ -30,13 +27,9 @@ router.use("/likes", LikeRouter);
 router.use("/bookmark", BookmarkRouter);
 router.use("/categories", CategoryRouter);
 router.use("/products", ProductRouter);
-<<<<<<< HEAD
 router.use("/notifications", NotificationRouter);
 router.use("/messages", MessageRoutes);
-
-export default router;
-=======
 router.use('/admin/user', UserRouter)
 router.use('/flag', FlagRouter)
+router.use('/statistics', StatisticsRouter)
 export default router
->>>>>>> 44c73207e9fcd73cdc9601ff105717af1850330e
