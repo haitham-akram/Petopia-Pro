@@ -18,7 +18,7 @@ const userSchema = new Schema(
     },
     googleId: {
       type: String, // Store Google ID for OAuth users
-      unique: true, // Ensure no duplicate Google IDs
+      // unique: true, // Ensure no duplicate Google IDs
     },
     userImage: {
       type: String, // URL or path to the user's image
@@ -31,6 +31,9 @@ const userSchema = new Schema(
     },
     phone: {
       type: String, // User's phone number
+    },
+    bio:{
+      type: String, // User's bio
     },
     isAdmin: {
       type: Boolean,

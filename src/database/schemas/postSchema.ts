@@ -1,11 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 import Comment from "./commentSchema";
-<<<<<<< HEAD
-// import { getFollowerQuery } from "../../queries/follower";
-// import Notification from "./notficationSchema";
-=======
-
->>>>>>> 44c73207e9fcd73cdc9601ff105717af1850330e
 
 // Define the Post schema
 const postSchema = new Schema(
