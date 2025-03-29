@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "username": "user1",
+      "email": "user1@example.com",
+      "password": "hashed_password_1",
+      "role": "USER",
+      "status": "active"
+    },
+    {
+      "username": "user2",
+      "email": "user2@example.com",
+      "password": "hashed_password_2",
+      "role": "USER",
+      "status": "active"
+    }
+  ],
+  "admin": {
+    "username": "admin",
+    "email": "admin@example.com",
+    "password": "hashed_admin_password",
+    "role": "ADMIN",
+    "status": "active"
+  }
+}
