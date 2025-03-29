@@ -1,7 +1,7 @@
 import { type Response, type NextFunction } from "express";
 import { type CustomRequest } from "../../interfaces/iUser";
 import { updateLike } from "../../queries/likes";
-import { sendNotificationToUserChannel } from "../../socket/events";
+import { sendNotifToPublicRoom } from "../../socket/events";
 
 async function addNewLikeController(
   req: CustomRequest,
@@ -9,21 +9,18 @@ async function addNewLikeController(
   next: NextFunction
 ) {
   try {
-<<<<<<< HEAD
-    const userId = req.user!.id as string;
-    const actorName = req.user!.fullName as string;
-=======
+    const actorName = req.userInfo!.fullName as string;
     const userId = req.userInfo!.id as string;
->>>>>>> 44c73207e9fcd73cdc9601ff105717af1850330e
     const relateId = req.params.relateId as string;
     const isComment = Object.keys(req.query).includes("comment");
 
     await updateLike({ userId, relateId, isComment }).then((likeAdded) => {
       if (likeAdded) {
-        sendNotificationToUserChannel({
+        sendNotifToPublicRoom({
           actorName,
           roomId: likeAdded.relateId.toString(),
           messageType: "new-like",
+          dataHeader: ""
         });
       }
     });

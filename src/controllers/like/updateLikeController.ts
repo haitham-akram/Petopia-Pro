@@ -1,7 +1,7 @@
 import { type Response, type NextFunction } from "express";
 import { type CustomRequest } from "../../interfaces/iUser";
 import { updateLike } from "../../queries/likes";
-import { sendNotifToPrivateRoom } from "../../socket/events";
+import { sendNotifToPublicRoom } from "../../socket/events";
 
 async function addNewLikeController(
   req: CustomRequest,
@@ -17,10 +17,11 @@ async function addNewLikeController(
 
     await updateLike({ userId, relateId, isComment }).then((likeAdded) => {
       if (likeAdded) {
-        sendNotifToPrivateRoom({
+        sendNotifToPublicRoom({
           actorName,
           roomId: likeAdded.relateId.toString(),
           messageType: "new-like",
+          dataHeader: ""
         });
       }
     });
