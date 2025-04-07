@@ -4,6 +4,7 @@ import addUser from "../../helpers/addUser";
 import { generateOTP } from '../../helpers/otpHelpers';
 import { sendEmail } from '../../helpers/emailHelper';
 import { storeOTP } from "../../queries/otp";
+import { generateSignupEmail } from "../../helpers/generateSignupEmail";
 
 const signup = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -12,8 +13,7 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
         const email = newUser.email
         storeOTP({ email, otp, timestamp: Date.now() })
         
-        await sendEmail(email, 'Your OTP Code', `Your OTP is: ${otp}`);
-
+        await sendEmail(email, 'Welcome to Petopia - Your Validation Code', generateSignupEmail(otp), true);
         res.status(201).json({
             message: 'OTP sent to your email.',
             data: newUser

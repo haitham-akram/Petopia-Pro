@@ -12,6 +12,7 @@ const verifyUser = async (req: Request, res: Response, next: NextFunction) => {
     const { email, otp } = req.body;
     try {
         const userOtpData = await getOTP(email)
+        console.log(userOtpData);
         if (!userOtpData) {
             throw new CustomError(400, 'this user is already verified.');
         }
@@ -26,10 +27,14 @@ const verifyUser = async (req: Request, res: Response, next: NextFunction) => {
             const token = await generateToken({ id: verifiedUser.id, email: verifiedUser.email, isAdmin: verifiedUser.isAdmin });
             await createNewConnection(verifiedUser.id)
 
-            res.cookie('token', token, { httpOnly: true }).status(201).json({
+            res.cookie("token", token, {
+                secure: process.env.NODE_ENV === "production",
+                maxAge: 1 * 24 * 60 * 60 * 1000,
+            }).json({
                 message: 'Email verified successfully!',
-                data: verifiedUser
+                 data: verifiedUser
             })
+
         } else {
             throw new CustomError(400, 'Invalid or expired OTP.');
         }

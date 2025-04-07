@@ -27,7 +27,10 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
         const connectios = await connectUserRooms(id as string)
 
         res
-          .cookie("token", token, { httpOnly: true })
+          .cookie("token", token, {
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 1 * 24 * 60 * 60 * 1000,
+          })
           .json({ message: "Logged in successfully", connectios });
 
       } else {
