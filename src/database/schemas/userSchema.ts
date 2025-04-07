@@ -32,7 +32,7 @@ const userSchema = new Schema(
     phone: {
       type: String, // User's phone number
     },
-    bio:{
+    bio: {
       type: String, // User's bio
     },
     isAdmin: {
@@ -64,9 +64,25 @@ const userSchema = new Schema(
     },
   },
   {
-    timestamps: true, // Automatically handle createdAt and updatedAt
+    timestamps: true, // Automatically handle createdAt and updatedAt,
+    toJSON: {
+      virtuals: true,
+      transform: (__doc, ret: any) => {
+        ret.id = ret?._id;
+        delete ret._id;
+        delete ret.__v;
+        return ret;
+      },
+    },
+    toObject: { virtuals: true },
   }
 );
+
+
+// userSchema.virtual("id").get(function () {
+//   return this._id.toHexString();
+// });
+
 
 // Create the User model from the schema
 const User = mongoose.model('User', userSchema);

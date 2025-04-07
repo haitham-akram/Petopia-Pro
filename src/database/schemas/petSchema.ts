@@ -39,7 +39,14 @@ const petSchema = new Schema(
     }
   },
   {
-    timestamps: true, // Automatically handle createdAt and updatedAt
+    timestamps: true, // Automatically handle createdAt and updatedAt,
+    toObject: { virtuals: true },
+    toJSON: {
+      virtuals: true, transform: (__doc, ret: any) => {
+        ret.id = ret._id
+        delete ret._id
+      }
+    }
   }
 );
 

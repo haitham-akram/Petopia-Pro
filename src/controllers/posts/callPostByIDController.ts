@@ -1,7 +1,7 @@
 import { type Response, type NextFunction } from "express";
 import CustomError from "../../helpers/CustomError";
 import { type CustomRequest } from "../../interfaces/iUser";
-import { callOnePostById } from "../../queries/posts";
+import { callPostOnPagenation } from "../../queries/posts";
 
 // All Done and tested ✅
 async function callPostByIdController(
@@ -12,7 +12,7 @@ async function callPostByIdController(
   try {
     const postId = req.params.postId;
 
-    const PostData = await callOnePostById(postId);
+    const PostData = await callPostOnPagenation(postId);
     if (!PostData) throw new CustomError(404, "There is no Post with this ID.");
 
     res.status(200).json({

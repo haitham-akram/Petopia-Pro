@@ -14,6 +14,8 @@ const PostsRouter = Router();
 // Get: Posts or one Post by Id with pagination
 PostsRouter.get("/:postId", callPostByIdController);
 
+PostsRouter.get("/", callPostByIdController);
+
 // Get: Posts of one user using UserId
 PostsRouter.get("/user/:userId", callPostsController);
 

@@ -4,12 +4,12 @@ import Post from "../../database/schemas/postSchema";
 
 // call Posts query using UserId (or all posts without the userId)
 const callPostOnPagenation = async (
-  index: string = "0",
-  count: string = "5",
+  index: string = "1",
+  count: string = "1",
   userId?: string | undefined
 ) => {
-  const indexNum = Number(index) > 0 ? Number(index) : 0;
-  const countNum = Number(count) > 0 || Number(count) < 21 ? Number(count) : 5;
+  const indexNum = Number(index) > 0 ? Number(index) : 1;
+  const countNum = Number(count) > 0 || Number(count) < 21 ? Number(count) : 1;
 
   let filterPosts = Post.find();
 
@@ -17,12 +17,20 @@ const callPostOnPagenation = async (
     filterPosts = Post.find({ userId }, "-userId");
   }
 
-  const allPosts = await filterPosts
-    .populate("productId")
-    .populate("petId")
-    .populate("userId", "fullName email userImage -_id")
+  const allPosts = filterPosts
+    .populate("product")
+    .populate("pet", "-ownerId")
+    .populate('category', "title -_id -categoryId")
+    .populate("user", "fullName userImage  isAdmin ")
+    .populate({
+      path: 'comments',
+      populate: {
+        path: 'userId', model: 'User', select: '-_id -postId -password -verified -phone -status -profileImage -bio -address -email -followerCount -followingCount -createdAt -updatedAt '
+      },
+    })
     .skip(indexNum * countNum)
-    .limit(countNum);
+    .limit(countNum)
+  // .lean();
 
   return allPosts;
 };

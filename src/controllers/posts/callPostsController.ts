@@ -47,5 +47,4 @@ export default callPostsController;
  *  test 1: using user Id Done ✅👌
  *  test 2: without user Id Done ✅👌
  *  test 3: pagination (with and without it) Done ✅👌
- *  
  */

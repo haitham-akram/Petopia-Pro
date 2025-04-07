@@ -18,6 +18,8 @@ const categorySchema = new Schema(
   }
 );
 
+categorySchema.index({ categoryId: 1 });
+
 // Create the Category model from the schema
 const Category = mongoose.model("Category", categorySchema);
 
