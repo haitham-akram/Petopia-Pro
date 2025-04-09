@@ -21,16 +21,36 @@ const callPostOnPagenation = async (
     .populate("product")
     .populate("pet", "-ownerId")
     .populate('category', "title -_id -categoryId")
-    .populate("user", "fullName userImage  isAdmin ")
+    .populate("user", "id userName fullName userImage  isAdmin followers followings")
     .populate({
       path: 'comments',
       populate: {
+
+        path: 'userId', model: 'User', select: '-_id -postId -password -verified -phone -status -profileImage -bio -address -email -followerCount -followingCount -createdAt -updatedAt '
+        ,
+        populate: [
+          {
+            path: 'followers',
+            populate: [
+              { path: 'followerUser', }
+            ]
+          },
+          {
+            path: 'followings', populate: [
+              { path: 'followingUser', }
+            ]
+          }]
+      }
+    })
+    .populate({
+      path: 'likes',
+      populate: {
         path: 'userId', model: 'User', select: '-_id -postId -password -verified -phone -status -profileImage -bio -address -email -followerCount -followingCount -createdAt -updatedAt '
       },
+      match: { isComment: false },
     })
     .skip(indexNum * countNum)
-    .limit(countNum)
-  // .lean();
+    .limit(countNum);
 
   return allPosts;
 };

@@ -16,14 +16,14 @@ const commentSchema = new Schema(
       require: true,
     },
     commentText: {
-      type: String, // Store commentText as a string
-      required: true, // Make commentText required
+      type: String,
+      required: true,
     },
   },
   {
-    timestamps: true, // Automatically handle createdAt and updatedAt,
+    timestamps: true,
     toJSON: {
-      virtuals: true,       // Include virtuals in JSON responses
+      virtuals: true,
       transform: (__doc, ret) => {
         delete ret.userId;
         delete ret._id;
@@ -33,22 +33,6 @@ const commentSchema = new Schema(
     toObject: { virtuals: true }, // Include virtuals when calling .toObject()
   }
 );
-
-commentSchema.pre("save", async function (next) {
-  try {
-    const post = await Post.findByIdAndUpdate(this.postId, {
-      $inc: { commentsCount: 1 },
-    });
-    if (!post) {
-      next(new CustomError(404, "No Post with this Id."));
-    } else {
-      next();
-    }
-  } catch (err) {
-    next();
-  }
-});
-
 
 commentSchema.virtual('user', {
   ref: 'User',
@@ -66,6 +50,34 @@ commentSchema.virtual("id").get(function () {
 });
 
 
+
+
+
+commentSchema.pre("save", async function (next) {
+  try {
+    const post = await Post.findByIdAndUpdate(this.postId, {
+      $inc: { commentsCount: +1 },
+    });
+    if (!post) {
+      next(new CustomError(404, "No Post with this Id."));
+    } else {
+      next();
+    }
+  } catch (err) {
+    next();
+  }
+});
+
+
+// commentSchema.post("save", async function (doc, next) {
+//   try {
+//     await Post.findByIdAndUpdate(doc.postId, { $inc: { commentsCount: +1 } });
+//     next();
+//   } catch (err) {
+//     next();
+//   }
+// });
+
 commentSchema.post("deleteOne", async function (doc, next) {
   try {
     await Post.findByIdAndUpdate(doc.postId, { $inc: { commentsCount: -1 } });
@@ -75,7 +87,6 @@ commentSchema.post("deleteOne", async function (doc, next) {
   }
 });
 
-// Create the Comment model from the schema
 const Comment = mongoose.model("Comment", commentSchema);
 
 export default Comment;

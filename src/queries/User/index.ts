@@ -5,5 +5,6 @@ import updateUserQuery from "./updateUser"
 import getUserByEmail from "./getUserByEmail"
 import manageStatusQuery from "./manageStatus"
 import getUsersQuery from "./getUsers"
+import getAllUsersQuery from "./getAllUsers"
 
-export { callPostCommentsByPostId, updateUserQuery, getUserByEmail, manageStatusQuery, getUsersQuery }
+export { callPostCommentsByPostId, updateUserQuery, getUserByEmail, manageStatusQuery, getUsersQuery,getAllUsersQuery }

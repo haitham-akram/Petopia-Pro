@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { addNewConnection, getPublicConnection} from "../../queries/connections";
+import { addNewConnection, getPublicConnection } from "../../queries/connections";
 import CustomError from "../../helpers/CustomError";
 
 // Define the Follower schema
@@ -18,6 +18,20 @@ const followerSchema = new Schema(
   },
   { timestamps: true }
 );
+
+followerSchema.virtual("followerUser", {
+  ref: 'User',
+  localField: 'followerId',
+  foreignField: '_id',
+  justOne: true,
+})
+
+followerSchema.virtual("followingUser", {
+  ref: 'User',
+  localField: 'followingId',
+  foreignField: '_id',
+  justOne: true,
+})
 
 followerSchema.post("save", async ({ followerId, followingId }, next) => {
   try {

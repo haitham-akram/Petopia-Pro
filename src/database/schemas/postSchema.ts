@@ -1,7 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import Comment from "./commentSchema";
 
-// Define the Post schema
 const postSchema = new Schema(
   {
     userId: {
@@ -10,7 +9,7 @@ const postSchema = new Schema(
       required: true,
     },
     categoryId: {
-      type: Number, // The ID of the category the post belongs to
+      type: Number,
       default: 0,
       ref: "Category",
       required: true,
@@ -25,77 +24,47 @@ const postSchema = new Schema(
       ref: "Product",
     },
     postContent: {
-      type: String, // Content of the post
+      type: String,
       required: true,
     },
     likesCount: {
-      type: Number, // Number of likes on the post
-      default: 0, // Default value is 0
+      type: Number,
+      default: 0,
     },
-    commentsCount: {
-      type: Number, // Number of comments on the post
-      default: 0, // Default value is 0
+    sharesCounts: {
+      type: Number,
+      default: 0,
     },
-    images: [
-      {
-        url: {
-          type: String, // Image Url
-          required: true,
-        },
-      },
-    ],
     bookmarkCount: {
       type: Number,
       default: 0,
     },
+    commentsCount: {
+      type: Number,
+      default: 0,
+    },
+    images: [
+      {
+        url: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
   },
   {
-    timestamps: true, // Automatically handle createdAt and updatedAt,
-    toJSON: { virtuals: true, transform: (__doc, ret: any) => { delete ret._id; return ret } },
+    timestamps: true,
+    toJSON: {
+      virtuals: true, transform: (__doc, ret: any) => {
+        ret.category = ret.category.title;
+        delete ret.categoryId;
+        delete ret._id;
+        return ret;
+      }
+    },
     toObject: { virtuals: true }
   }
 );
-
-postSchema.post("save", async function (__doc, next) {
-  try {
-    // console.log(doc);
-    // const { userId, _id: postId } = doc;
-
-    // const allFollwers = await getFollowerQuery(
-    //   userId.toString(),
-    //   "follower",
-    //   ""
-    // );
-
-    // const followersNotify = allFollwers.map(({ _id }) => {
-    //   return {
-    //     userId: _id.toString(),
-    //     actorId: userId.toString(),
-    //     type: 0,
-    //     data: { postId },
-    //   };
-    // });
-
-    // console.log(sendNotify("post created", userId.toString()));
-
-    // await Notification.insertMany(followersNotify);
-
-    // console.log(followersNotify);
-
-    next();
-  } catch (err) {
-    next();
-  }
-});
-
-postSchema.post("findOneAndDelete", async function (doc, next) {
-  try {
-    await Comment.deleteMany({ postId: doc._id });
-    next();
-  } catch (err) {
-    next();
-  }
-});
 
 postSchema.virtual('category', {
   ref: 'Category',
@@ -103,7 +72,6 @@ postSchema.virtual('category', {
   foreignField: 'categoryId',
   justOne: true,
 });
-
 
 
 postSchema.virtual('pet', {
@@ -133,11 +101,26 @@ postSchema.virtual('comments', {
   foreignField: 'postId',
 });
 
+postSchema.virtual('likes', {
+  ref: 'Like',
+  localField: '_id',
+  foreignField: 'relateId',
+});
+
+
+postSchema.post("findOneAndDelete", async function (doc, next) {
+  try {
+    await Comment.deleteMany({ postId: doc._id || doc.id });
+    next();
+  } catch (err) {
+    next();
+  }
+});
+
 postSchema.virtual("id").get(function () {
   return this._id.toHexString();
 });
 
-// Create the Post model from the schema
 const Post = mongoose.model("Post", postSchema);
 
 export default Post;

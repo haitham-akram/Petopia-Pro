@@ -4,6 +4,12 @@ import mongoose, { Schema } from "mongoose";
 // Define the User schema
 const userSchema = new Schema(
   {
+
+    userName: {
+      type: String, // Full name of the user
+      required: true,
+      unique: true,
+    },
     fullName: {
       type: String, // Full name of the user
       required: true,
@@ -78,13 +84,25 @@ const userSchema = new Schema(
   }
 );
 
+userSchema.virtual('followers', {
+  ref: 'Follower',
+  localField: '_id',
+  foreignField: 'followingId',
+});
 
-// userSchema.virtual("id").get(function () {
-//   return this._id.toHexString();
-// });
+userSchema.virtual('followings', {
+  ref: 'Follower',
+  localField: '_id',
+  foreignField: 'followerId',
+});
 
 
-// Create the User model from the schema
+userSchema.index({ userName: 1 }, { unique: true });
+userSchema.index({ email: 1 }, { unique: true });
+// userSchema.index({ googleId: 1 }, { unique: true });
+userSchema.index({ status: 1 });
+userSchema.index({ isAdmin: 1 });
+
 const User = mongoose.model('User', userSchema);
 
 export default User;
