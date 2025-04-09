@@ -31,7 +31,20 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
             secure: process.env.NODE_ENV === "production",
             maxAge: 1 * 24 * 60 * 60 * 1000,
           })
-          .json({ message: "Logged in successfully", connectios });
+          .json({
+            message: "Logged in successfully", connectios,
+            user: {
+              userName: 'user',
+              email,
+              userImage: user.userImage || 'https://i.imgur.com/E0TQFoe.png',
+              profileImage: user.profileImage || '',
+              bio: user.bio || 'user bio',
+              followingCount: user.followingCount,
+              followerCount: user.followerCount,
+              phone: user.phone || 'user phone',
+              isAdmin: user.isAdmin
+            }
+          });
 
       } else {
         throw new CustomError(400, "Wrong Password");

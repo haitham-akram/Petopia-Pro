@@ -12,7 +12,6 @@ const verifyUser = async (req: Request, res: Response, next: NextFunction) => {
     const { email, otp } = req.body;
     try {
         const userOtpData = await getOTP(email)
-        console.log(userOtpData);
         if (!userOtpData) {
             throw new CustomError(400, 'this user is already verified.');
         }
@@ -32,7 +31,17 @@ const verifyUser = async (req: Request, res: Response, next: NextFunction) => {
                 maxAge: 1 * 24 * 60 * 60 * 1000,
             }).json({
                 message: 'Email verified successfully!',
-                 data: verifiedUser
+                user: {
+                    userName: 'user',
+                    email,
+                    userImage: verifiedUser.userImage || 'https://i.imgur.com/E0TQFoe.png',
+                    profileImage: verifiedUser.profileImage || '',
+                    bio: verifiedUser.bio || 'user bio',
+                    followingCount: verifiedUser.followingCount,
+                    followerCount: verifiedUser.followerCount,
+                    phone: verifiedUser.phone || 'user phone',
+                    isAdmin: verifiedUser.isAdmin
+                }
             })
 
         } else {

@@ -1,4 +1,4 @@
-export const generateResentOTP = (otp: string): string => {
+export const generateResetPassword = (link: string): string => {
     return `
     <!DOCTYPE html>
     <html>
@@ -35,12 +35,6 @@ export const generateResentOTP = (otp: string): string => {
             .content h1 {
                 color: #333;
             }
-            .otp {
-                font-size: 24px;
-                font-weight: bold;
-                color: #ff903b;
-                margin: 20px 0;
-            }
             .footer {
                 background-color: #f0f0f5;
                 text-align: center;
@@ -54,12 +48,11 @@ export const generateResentOTP = (otp: string): string => {
         <div class="email-container">
             <div class="header">
                 <img src="https://i.imgur.com/Dl0z6tl.png" alt="Petopia Logo">
-                <h2>Welcome to Petopia!</h2>
+                <h2>Forgot your Password ?</h2>
             </div>
             <div class="content">
-                <h1>We're excited to have you on board!</h1>
-                <p>To complete your sigp, please use the OTP below:</p>
-                <div class="otp">${otp}</div>
+                <h1>You requested a password reset</h1>
+                <p>Click this <a href="${link}">link</a> to reset your password</p>
                 <p>If you didn't request this, please ignore this email.</p>
             </div>
             <div class="footer">
