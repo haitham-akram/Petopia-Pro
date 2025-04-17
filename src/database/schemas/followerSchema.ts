@@ -16,7 +16,28 @@ const followerSchema = new Schema(
       required: true,
     }
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+      transform: (__doc, ret: any) => {
+        ret.id = ret?._id;
+        // Format createdAt and updatedAt to "yyyy-m-d"
+        if (ret.createdAt) {
+          const date = new Date(ret.createdAt);
+          ret.createdAt = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+        }
+        if (ret.updatedAt) {
+          const date = new Date(ret.updatedAt);
+          ret.updatedAt = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+        }
+        delete ret._id;
+        delete ret.__v;
+        return ret;
+      },
+    },
+    toObject: { virtuals: true },
+  }
 );
 
 followerSchema.virtual("followerUser", {

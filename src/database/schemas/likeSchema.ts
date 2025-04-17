@@ -36,16 +36,11 @@ const likeSchema = new Schema(
   }
 );
 
-
 likeSchema.virtual('user', {
   ref: 'User',
   localField: 'userId',
   foreignField: '_id',
   justOne: true,
-});
-
-likeSchema.virtual("user").get(function () {
-  return this!.userId;
 });
 
 likeSchema.virtual("id").get(function () {

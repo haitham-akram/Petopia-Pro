@@ -4,7 +4,7 @@ import addNewPost from "./addNewPost";
 import callOnePostById from "./callOnePostById";
 import deletePostById from "./deletePostById";
 import replacePostById from "./replacePostData";
-import callPostOnPagenation from "./callPostOnPagenation";
+import callPostOnPagenation from "./callPostsExplore";
 import callPostExistence from "./callPostExistence";
 import callAllDataPost from "./callAllDataPost";
 

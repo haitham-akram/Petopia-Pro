@@ -30,9 +30,9 @@ async function addNewCommentController(
     const addedComment = await addNewComment(
       validatedCommentData as unknown as INewComment
     ).then(async data => {
-      if (!data) new CustomError(400, "Somthing went wrong.");
+      if (!data) return new CustomError(400, "Somthing went wrong.");
 
-      await sendNewCommentNotif(actorName, userId, data.commentText)
+      await sendNewCommentNotif(actorName, userId, data?.commentText)
       return data
     });
 

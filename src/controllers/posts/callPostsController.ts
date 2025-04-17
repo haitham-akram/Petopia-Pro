@@ -11,6 +11,8 @@ async function callPostsController(
     const { index, count } = req.query;
     const { userId } = req.params;
 
+    console.log(index, count)
+
     const allPosts = await callPostOnPagenation(
       index as string,
       count as string,

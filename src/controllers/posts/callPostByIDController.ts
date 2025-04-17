@@ -10,9 +10,14 @@ async function callPostByIdController(
   next: NextFunction
 ) {
   try {
+    const { index, count } = req.query;
     const postId = req.params.postId;
 
-    const PostData = await callPostOnPagenation(postId);
+    console.log(index, count )
+
+    const PostData = await callPostOnPagenation(
+      index as string,
+      count as string,);
     if (!PostData) throw new CustomError(404, "There is no Post with this ID.");
 
     res.status(200).json({

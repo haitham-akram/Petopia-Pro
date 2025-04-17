@@ -24,7 +24,15 @@ const commentSchema = new Schema(
     timestamps: true,
     toJSON: {
       virtuals: true,
-      transform: (__doc, ret) => {
+      transform: (__doc, ret: any) => {
+        if (ret.createdAt) {
+          const date = new Date(ret.createdAt);
+          ret.createdAt = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+        }
+        if (ret.updatedAt) {
+          const date = new Date(ret.updatedAt);
+          ret.updatedAt = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+        }
         delete ret.userId;
         delete ret._id;
         return ret;
@@ -50,33 +58,25 @@ commentSchema.virtual("id").get(function () {
 });
 
 
-
-
-
 commentSchema.pre("save", async function (next) {
   try {
-    const post = await Post.findByIdAndUpdate(this.postId, {
-      $inc: { commentsCount: +1 },
-    });
-    if (!post) {
-      next(new CustomError(404, "No Post with this Id."));
-    } else {
-      next();
+    const { postId } = this;
+
+    let postExist = await Post.findById(postId);
+
+    if (!postExist) {
+      return next(new CustomError(404, "No post found with this Id."));
     }
-  } catch (err) {
+
+    await Post.findByIdAndUpdate(postId, {
+      $inc: { commentsCount: 1 },
+    });
     next();
+  } catch (err) {
+    next(new CustomError(500, "Error from the server, try again later."));
   }
 });
 
-
-// commentSchema.post("save", async function (doc, next) {
-//   try {
-//     await Post.findByIdAndUpdate(doc.postId, { $inc: { commentsCount: +1 } });
-//     next();
-//   } catch (err) {
-//     next();
-//   }
-// });
 
 commentSchema.post("deleteOne", async function (doc, next) {
   try {
@@ -86,6 +86,13 @@ commentSchema.post("deleteOne", async function (doc, next) {
     next();
   }
 });
+
+commentSchema.virtual('likes', {
+  ref: 'Like',
+  localField: '_id',
+  foreignField: 'relateId',
+});
+
 
 const Comment = mongoose.model("Comment", commentSchema);
 

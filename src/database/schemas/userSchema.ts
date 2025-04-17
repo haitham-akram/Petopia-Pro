@@ -7,7 +7,7 @@ const userSchema = new Schema(
 
     userName: {
       type: String, // Full name of the user
-      required: true,
+      // required: true,
       unique: true,
     },
     fullName: {
@@ -75,6 +75,15 @@ const userSchema = new Schema(
       virtuals: true,
       transform: (__doc, ret: any) => {
         ret.id = ret?._id;
+        // Format createdAt and updatedAt to "yyyy-m-d"
+        if (ret.createdAt) {
+          const date = new Date(ret.createdAt);
+          ret.createdAt = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+        }
+        if (ret.updatedAt) {
+          const date = new Date(ret.updatedAt);
+          ret.updatedAt = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+        }
         delete ret._id;
         delete ret.__v;
         return ret;
