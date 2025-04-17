@@ -32,7 +32,8 @@ const verifyUser = async (req: Request, res: Response, next: NextFunction) => {
             }).json({
                 message: 'Email verified successfully!',
                 user: {
-                    userName: 'user',
+                    fullName: verifiedUser.fullName,
+                    userName: '',
                     email,
                     userImage: verifiedUser.userImage || 'https://i.imgur.com/E0TQFoe.png',
                     profileImage: verifiedUser.profileImage || '',

@@ -7,6 +7,6 @@ import forgetPassword from './forgetPassword'
 import resetPassword from "./resetPassword";
 import passport from "./passport";
 import googleCallback from "./googleOAuthCallback";
+import getUserInfo from "./getUserInfo";
 
-
-export { login, signup, logout, newOtp, verifyUser, forgetPassword, resetPassword, passport, googleCallback }
+export { login, signup, logout, newOtp, verifyUser, forgetPassword, resetPassword, passport, googleCallback, getUserInfo }

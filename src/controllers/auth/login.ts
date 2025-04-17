@@ -34,14 +34,15 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
           .json({
             message: "Logged in successfully", connectios,
             user: {
-              userName: 'user',
+              fullName: user.fullName,
+              userName: '',
               email,
               userImage: user.userImage || 'https://i.imgur.com/E0TQFoe.png',
               profileImage: user.profileImage || '',
               bio: user.bio || 'user bio',
               followingCount: user.followingCount,
               followerCount: user.followerCount,
-              phone: user.phone || 'user phone',
+              phone: user.phone || '',
               isAdmin: user.isAdmin
             }
           });

@@ -15,7 +15,8 @@ const forgetPassword = async (req: Request, res: Response, next: NextFunction) =
         if (!user) {
             throw new CustomError(404, 'User not found.');
         }
-        const resetToken = await generateToken({ id: user.id, email: user.email, isAdmin: user.isAdmin, hashedPassword: user.password as string });
+        console.log(user.password);
+        const resetToken = await generateToken({ id: user.id, email: user.email, isAdmin: user.isAdmin, hashedPassword: user?.password as string });
         const resetUrl = `${FRONTEND_URL}/reset-password/${resetToken}`;
         const htmlEmail = generateResetPassword(resetUrl)
         await sendEmail(email, "Password Reset", htmlEmail, true)
