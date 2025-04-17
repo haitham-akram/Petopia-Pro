@@ -26,10 +26,25 @@ const verifyUser = async (req: Request, res: Response, next: NextFunction) => {
             const token = await generateToken({ id: verifiedUser.id, email: verifiedUser.email, isAdmin: verifiedUser.isAdmin });
             await createNewConnection(verifiedUser.id)
 
-            res.cookie('token', token, { httpOnly: true }).status(201).json({
+            res.cookie("token", token, {
+                secure: process.env.NODE_ENV === "production",
+                maxAge: 1 * 24 * 60 * 60 * 1000,
+            }).json({
                 message: 'Email verified successfully!',
-                data: verifiedUser
+                user: {
+                    fullName: verifiedUser.fullName,
+                    userName: '',
+                    email,
+                    userImage: verifiedUser.userImage || 'https://i.imgur.com/E0TQFoe.png',
+                    profileImage: verifiedUser.profileImage || '',
+                    bio: verifiedUser.bio || 'user bio',
+                    followingCount: verifiedUser.followingCount,
+                    followerCount: verifiedUser.followerCount,
+                    phone: verifiedUser.phone || 'user phone',
+                    isAdmin: verifiedUser.isAdmin
+                }
             })
+
         } else {
             throw new CustomError(400, 'Invalid or expired OTP.');
         }

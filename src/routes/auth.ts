@@ -1,5 +1,5 @@
 import express from 'express'
-import { login, logout, newOtp, signup, verifyUser, forgetPassword, resetPassword, passport, googleCallback } from '../controllers/auth'
+import { login, logout, newOtp, signup, verifyUser, forgetPassword, resetPassword, passport, googleCallback, getUserInfo } from '../controllers/auth'
 
 
 const router = express.Router()
@@ -17,8 +17,9 @@ router.get("/google", passport.authenticate("google", { scope: ["profile", "emai
 
 router.get(
     "/google/callback",
-    passport.authenticate("google", { failureRedirect: "/login", session: false }),
+    passport.authenticate("google", { session: false }),
     googleCallback
 );
+router.get('/google-user',     passport.authenticate('jwt', { session: false }), getUserInfo);
 
 export default router

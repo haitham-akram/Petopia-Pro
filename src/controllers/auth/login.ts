@@ -27,8 +27,25 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
         const connectios = await connectUserRooms(id as string)
 
         res
-          .cookie("token", token, { httpOnly: true })
-          .json({ message: "Logged in successfully", connectios });
+          .cookie("token", token, {
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 1 * 24 * 60 * 60 * 1000,
+          })
+          .json({
+            message: "Logged in successfully", connectios,
+            user: {
+              fullName: user.fullName,
+              userName: '',
+              email,
+              userImage: user.userImage || 'https://i.imgur.com/E0TQFoe.png',
+              profileImage: user.profileImage || '',
+              bio: user.bio || 'user bio',
+              followingCount: user.followingCount,
+              followerCount: user.followerCount,
+              phone: user.phone || '',
+              isAdmin: user.isAdmin
+            }
+          });
 
       } else {
         throw new CustomError(400, "Wrong Password");

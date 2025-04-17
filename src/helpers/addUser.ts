@@ -26,12 +26,14 @@ const addUser = async (data: UserType) => {
     let hashedPassword;
     if (password) {
         hashedPassword = await bcrypt.hash(password, 10)
+    } else {
+        hashedPassword = await bcrypt.hash('password', 10)
     }
 
     const newUser = await signupQuery({
         fullName,
         email,
-        password: googleId ? undefined : hashedPassword,
+        password: hashedPassword,
         googleId,
         address,
         phone,
@@ -39,7 +41,7 @@ const addUser = async (data: UserType) => {
         profileImage,
         isAdmin: isAdminEmailFound,
         status,
-        verified,
+        verified: googleId ? true : verified,
         followerCount,
         followingCount
     })
