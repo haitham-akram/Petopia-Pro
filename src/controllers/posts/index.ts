@@ -3,13 +3,15 @@
 import addNewPostController from "./addNewPostController";
 import updatePostController from "./updatePostController";
 import callPostByIdController from "./callPostByIDController";
-import callPostsController from "./callPostsController";
+import callExplorePostsController from "./callExplorePostsController";
+import callFYPPostsController from "./callFYPPostsController";
 import deletePostsByIDController from "./deletePostsByIDController";
 
 export {
   addNewPostController,
   updatePostController,
   callPostByIdController,
-  callPostsController,
+  callExplorePostsController,
+  callFYPPostsController,
   deletePostsByIDController,
 };
