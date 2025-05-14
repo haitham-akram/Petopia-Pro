@@ -1,28 +1,21 @@
-import { type Response, type NextFunction, type Request } from "express";
+import { type Response, type NextFunction } from "express";
 import callFYPPostOnPagenation from "../../queries/posts/callPostsFYP";
+import { CustomRequest } from "../../interfaces/iUser";
 
 // All Done and tested ✅
 async function callFYPPostsController(
-    req: Request,
+    req: CustomRequest,
     res: Response,
     next: NextFunction
 ) {
     try {
-        const { index, count } = req.query;
-        const { userid } = req.headers;
+        const { index, count, cate } = req.query;
 
         const allPosts = await callFYPPostOnPagenation(
             index as string,
             count as string,
-            userid as string
+            cate as string
         );
-
-        // if (!allPosts.length) {
-        //     res.status(404).json({
-        //         message: "No posts found for this search",
-        //     });
-        //     return;
-        // }
 
         res.status(200).json({
             message: "This are the Posts you called",

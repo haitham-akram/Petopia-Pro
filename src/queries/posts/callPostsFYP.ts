@@ -6,13 +6,23 @@ import Post from "../../database/schemas/postSchema";
 const callFYPPostOnPagenation = async (
   index: string = "0",
   count: string = "5",
-  userId: string
+  // userId: string,
+  cate?: string,
 ) => {
   const indexNum = Number(index) > 0 ? Number(index) : 0;
   const countNum = Number(count) > 0 && Number(count) < 21 ? Number(count) : 5;
 
+  let categoryFind: any = {}
+  if (typeof cate == "string") {
+    categoryFind = { categoryId: cate }
+  }
+
+  const followerId = new mongoose.Types.ObjectId("6800a2df0fcec80f21313032")
+
   const followings = await Follower.aggregate([
-    { $match: { followerId: new mongoose.Types.ObjectId(userId) } },
+    {
+      $match: { followerId, },
+    },
     {
       $lookup: {
         from: 'users',
@@ -33,7 +43,9 @@ const callFYPPostOnPagenation = async (
 
   const followingUserIds = followings.map((follower) => new mongoose.Types.ObjectId(String(follower.user._id)));
 
-  const followingPosts = Post.find({ userId: { $in: followingUserIds } })
+  console.log("Hello from callFYPPostOnPagenation");
+
+  const followingPosts = Post.find({ userId: { $in: followingUserIds }, ...categoryFind })
     .skip(indexNum * countNum)
     .limit(countNum)
     .populate("product", "-userId")
