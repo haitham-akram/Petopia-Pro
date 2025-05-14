@@ -17,8 +17,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(compression())
 app.use(cookieParser())
-app.use(cors())
-
+// app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:3000', // Replace with your frontend URL
+    credentials: true, // Allow cookies and headers like Authorization
+}));
 
 // Initialize Passport
 app.use(passport.initialize());
