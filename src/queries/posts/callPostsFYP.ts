@@ -6,7 +6,7 @@ import Post from "../../database/schemas/postSchema";
 const callFYPPostOnPagenation = async (
   index: string = "0",
   count: string = "5",
-  // userId: string,
+  userId: string,
   cate?: string,
 ) => {
   const indexNum = Number(index) > 0 ? Number(index) : 0;
@@ -17,7 +17,7 @@ const callFYPPostOnPagenation = async (
     categoryFind = { categoryId: cate }
   }
 
-  const followerId = new mongoose.Types.ObjectId("6800a2df0fcec80f21313032")
+  const followerId = new mongoose.Types.ObjectId(userId)
 
   const followings = await Follower.aggregate([
     {

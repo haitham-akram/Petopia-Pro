@@ -17,7 +17,7 @@ const PostsRouter = Router();
 
 PostsRouter.get("/explore", callExplorePostsController);
 
-PostsRouter.get("/fyp", callFYPPostsController);
+PostsRouter.get("/fyp", authenticate([ADMIN, REGULAR]), callFYPPostsController);
 
 // Get: Posts of one user using UserId
 // PostsRouter.get("/user/:userId", callPostsController);

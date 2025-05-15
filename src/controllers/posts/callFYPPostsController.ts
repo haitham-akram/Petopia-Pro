@@ -10,10 +10,15 @@ async function callFYPPostsController(
 ) {
     try {
         const { index, count, cate } = req.query;
+        const userInfo = req.userInfo as { id: string, email: string, fullName: string, isAdmin: boolean };
+
+        console.log("Hello from callFYPPostsController");
+        console.log("userInfo", userInfo);
 
         const allPosts = await callFYPPostOnPagenation(
             index as string,
             count as string,
+            userInfo.id,
             cate as string
         );
 
