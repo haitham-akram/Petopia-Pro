@@ -3,8 +3,9 @@ import {
   addNewPostController,
   callPostByIdController,
   updatePostController,
-  callPostsController,
+  callExplorePostsController,
   deletePostsByIDController,
+  callFYPPostsController,
 } from "../../controllers/posts";
 import authenticate, { userTypes } from "../../middlewares/auth";
 const { ADMIN, REGULAR } = userTypes;
@@ -12,10 +13,14 @@ const { ADMIN, REGULAR } = userTypes;
 const PostsRouter = Router();
 
 // Get: Posts or one Post by Id with pagination
-PostsRouter.get("/:postId", callPostByIdController);
+// PostsRouter.get("/:postId", callPostByIdController);
+
+PostsRouter.get("/explore", callExplorePostsController);
+
+PostsRouter.get("/fyp", authenticate([ADMIN, REGULAR]), callFYPPostsController);
 
 // Get: Posts of one user using UserId
-PostsRouter.get("/user/:userId", callPostsController);
+// PostsRouter.get("/user/:userId", callPostsController);
 
 // Get: Create a new post
 PostsRouter.post("/", authenticate([ADMIN, REGULAR]), addNewPostController);

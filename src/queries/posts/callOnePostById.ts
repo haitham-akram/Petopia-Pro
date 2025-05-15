@@ -3,13 +3,18 @@ import Post from "../../database/schemas/postSchema";
 
 // call old Post by query
 const callOnePostById = async (postId: string) => {
+  if (!postId) {
+    return await Post.find()
+      .populate("userId", "fullName email userImage -_id")
+      .populate("productId")
+      .populate("petId");
+  }
+
   // Save the Post to the database
-  const post = await Post.findById(postId)
+  return await Post.findById(postId)
     .populate("userId", "fullName email userImage -_id")
     .populate("productId")
     .populate("petId");
-
-  return post;
 };
 
 export default callOnePostById;

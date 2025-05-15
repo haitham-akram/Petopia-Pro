@@ -4,6 +4,12 @@ import mongoose, { Schema } from "mongoose";
 // Define the User schema
 const userSchema = new Schema(
   {
+
+    userName: {
+      type: String, // Full name of the user
+      // required: true,
+      unique: true,
+    },
     fullName: {
       type: String, // Full name of the user
       required: true,
@@ -32,7 +38,7 @@ const userSchema = new Schema(
     phone: {
       type: String, // User's phone number
     },
-    bio:{
+    bio: {
       type: String, // User's bio
     },
     isAdmin: {
@@ -64,11 +70,48 @@ const userSchema = new Schema(
     },
   },
   {
-    timestamps: true, // Automatically handle createdAt and updatedAt
+    timestamps: true, // Automatically handle createdAt and updatedAt,
+    toJSON: {
+      virtuals: true,
+      transform: (__doc, ret: any) => {
+        ret.id = ret?._id;
+        // Format createdAt and updatedAt to "yyyy-m-d"
+        if (ret.createdAt) {
+          const date = new Date(ret.createdAt);
+          ret.createdAt = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+        }
+        if (ret.updatedAt) {
+          const date = new Date(ret.updatedAt);
+          ret.updatedAt = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+        }
+        delete ret._id;
+        delete ret.__v;
+        return ret;
+      },
+    },
+    toObject: { virtuals: true },
   }
 );
 
-// Create the User model from the schema
+userSchema.virtual('followers', {
+  ref: 'Follower',
+  localField: '_id',
+  foreignField: 'followingId',
+});
+
+userSchema.virtual('followings', {
+  ref: 'Follower',
+  localField: '_id',
+  foreignField: 'followerId',
+});
+
+
+userSchema.index({ userName: 1 }, { unique: true });
+userSchema.index({ email: 1 }, { unique: true });
+// userSchema.index({ googleId: 1 }, { unique: true });
+userSchema.index({ status: 1 });
+userSchema.index({ isAdmin: 1 });
+
 const User = mongoose.model('User', userSchema);
 
 export default User;

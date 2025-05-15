@@ -1,8 +1,8 @@
 import { type Response, type NextFunction, type Request } from "express";
-import { callPostOnPagenation } from "../../queries/posts";
+import { callPostOnPagenation as callExplorePostOnPagenation } from "../../queries/posts";
 
 // All Done and tested ✅
-async function callPostsController(
+async function callExplorePostsController(
   req: Request,
   res: Response,
   next: NextFunction
@@ -11,7 +11,7 @@ async function callPostsController(
     const { index, count } = req.query;
     const { userId } = req.params;
 
-    const allPosts = await callPostOnPagenation(
+    const allPosts = await callExplorePostOnPagenation(
       index as string,
       count as string,
       userId as string
@@ -40,12 +40,11 @@ async function callPostsController(
   next();
 }
 
-export default callPostsController;
+export default callExplorePostsController;
 
 /**
  * Tests
  *  test 1: using user Id Done ✅👌
  *  test 2: without user Id Done ✅👌
  *  test 3: pagination (with and without it) Done ✅👌
- *  
  */

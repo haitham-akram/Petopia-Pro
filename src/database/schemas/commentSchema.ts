@@ -16,29 +16,67 @@ const commentSchema = new Schema(
       require: true,
     },
     commentText: {
-      type: String, // Store commentText as a string
-      required: true, // Make commentText required
+      type: String,
+      required: true,
     },
   },
   {
-    timestamps: true, // Automatically handle createdAt and updatedAt
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+      transform: (__doc, ret: any) => {
+        if (ret.createdAt) {
+          const date = new Date(ret.createdAt);
+          ret.createdAt = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+        }
+        if (ret.updatedAt) {
+          const date = new Date(ret.updatedAt);
+          ret.updatedAt = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+        }
+        delete ret.userId;
+        delete ret._id;
+        return ret;
+      }
+    },
+    toObject: { virtuals: true }, // Include virtuals when calling .toObject()
   }
 );
 
+commentSchema.virtual('user', {
+  ref: 'User',
+  localField: 'userId',
+  foreignField: '_id',
+  justOne: true,
+});
+
+commentSchema.virtual("user").get(function () {
+  return this!.userId;
+});
+
+commentSchema.virtual("id").get(function () {
+  return this._id.toHexString();
+});
+
+
 commentSchema.pre("save", async function (next) {
   try {
-    const post = await Post.findByIdAndUpdate(this.postId, {
+    const { postId } = this;
+
+    let postExist = await Post.findById(postId);
+
+    if (!postExist) {
+      return next(new CustomError(404, "No post found with this Id."));
+    }
+
+    await Post.findByIdAndUpdate(postId, {
       $inc: { commentsCount: 1 },
     });
-    if (!post) {
-      next(new CustomError(404, "No Post with this Id."));
-    } else {
-      next();
-    }
-  } catch (err) {
     next();
+  } catch (err) {
+    next(new CustomError(500, "Error from the server, try again later."));
   }
 });
+
 
 commentSchema.post("deleteOne", async function (doc, next) {
   try {
@@ -49,7 +87,13 @@ commentSchema.post("deleteOne", async function (doc, next) {
   }
 });
 
-// Create the Comment model from the schema
+commentSchema.virtual('likes', {
+  ref: 'Like',
+  localField: '_id',
+  foreignField: 'relateId',
+});
+
+
 const Comment = mongoose.model("Comment", commentSchema);
 
 export default Comment;

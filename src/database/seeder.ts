@@ -128,6 +128,7 @@ const seedUsers = async (count = 15) => {
 
         const users = Array.from({ length: count }, () => ({
             fullName: faker.person.fullName(),
+            userName: faker.person.fullName().concat((Math.random() + "").slice(0, 4).replace(".", "")).replace(" ", "-").toLocaleLowerCase(),
             email: faker.internet.email().toLowerCase(),
             password: faker.internet.password(),
             profileImage: faker.image.avatar(),

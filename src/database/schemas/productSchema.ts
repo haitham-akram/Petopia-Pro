@@ -32,9 +32,22 @@ const productSchema = new Schema(
     },
   },
   {
-    timestamps: true, // Automatically handle createdAt and updatedAt
+    timestamps: true, // Automatically handle createdAt and updatedAt,
+    toObject: { virtuals: true },
+    toJSON: {
+      virtuals: true, transform: (__doc, ret: any) => {
+        ret.id = ret._id
+        delete ret._id
+      }
+    }
   }
 );
+
+
+productSchema.virtual("id").get(function () {
+  return this._id.toHexString();
+});
+
 
 // productSchema.pre("save", async function (next) {
 //   try {
